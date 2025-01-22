@@ -18,10 +18,9 @@ The **Smart Shopping List App** is a collaborative and intelligent shopping assi
 
 ## **Tech Stack** 🛠️
 
-- **Frontend**: React, TailwindCSS  
-- **Backend**: Firebase (Firestore, Authentication, Functions)  
-- **AI Integration**: OpenAI API for intelligent suggestions  
-- **Hosting**: Firebase Hosting  
+- **Frontend**: React, TailwindCSS
+- **Backend**: Firebase
+- **AI Integration**: OpenAI API for intelligent suggestions
 
 ## **How to Use?** 🚀
 
