@@ -8,7 +8,6 @@ const ShoppingList = lazy(() => import('./pages/ShoppingList'));
 const PrivateRoute = lazy(() => import('./components/PrivateRoute'));
 const RestrictToAuth = lazy(() => import('./components/RestrictToAuth'));
 
-
 function App() {
   return (
     <Router>
