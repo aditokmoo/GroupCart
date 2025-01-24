@@ -24,7 +24,7 @@ export const useLoginWithPassword = () => {
     const setUser = useAuthStore((state) => state.setUser);
 
     const mutation = useMutation({
-        mutationFn: ({ email, password }: { email: string; password: string }) =>
+        mutationFn: ({ email, password }: UserRequest) =>
             signInWithEmailAndPassword(auth, email, password),
         onSuccess: (data) => {
             setUser(data.user);
