@@ -4,11 +4,12 @@ import { useAuthListener } from "./hooks/useAuthListener";
 
 const Home = lazy(() => import('@/pages/Home'));
 const Login = lazy(() => import('@/pages/auth/Login'));
-const AuthLayout = lazy(() => import('@/pages/auth/AuthLayout'));
 const Register = lazy(() => import('@/pages/auth/Register'));
 const ShoppingList = lazy(() => import('@/pages/ShoppingList'));
-const PrivateRoute = lazy(() => import('@/components/PrivateRoute'));
-const RestrictToAuth = lazy(() => import('@/components/RestrictToAuth'));
+const AuthLayout = lazy(() => import('@/pages/auth/AuthLayout'));
+const PrivateRoute = lazy(() => import('@/components/PrivateRoute') as Promise<{ default: React.ComponentType<any> }>);
+const RestrictToAuth = lazy(() => import('@/components/RestrictToAuth') as Promise<{ default: React.ComponentType<any> }>);
+
 
 function App() {
   useAuthListener() // Check if user is logged in
