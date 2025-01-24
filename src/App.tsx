@@ -5,6 +5,7 @@ import { useAuthListener } from "./hooks/useAuthListener";
 const Home = lazy(() => import('@/pages/Home'));
 const Login = lazy(() => import('@/pages/auth/Login'));
 const Register = lazy(() => import('@/pages/auth/Register'));
+const Profile = lazy(() => import('@/pages/Profile'));
 const ShoppingList = lazy(() => import('@/pages/ShoppingList'));
 const AuthLayout = lazy(() => import('@/pages/auth/AuthLayout'));
 const PrivateRoute = lazy(() => import('@/components/PrivateRoute') as Promise<{ default: React.ComponentType<any> }>);
@@ -38,6 +39,13 @@ function App() {
           <Route path="/shopping-list" element={
             <PrivateRoute>
               <ShoppingList />
+            </PrivateRoute>
+          }
+          />
+
+          <Route path="/profile" element={
+            <PrivateRoute>
+              <Profile />
             </PrivateRoute>
           }
           />
