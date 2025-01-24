@@ -1,13 +1,12 @@
-import useAuthStore from "@/stores/authStore";
+import GroupList from "@/components/GroupList/GroupList";
+import Navbar from "@/components/Navbar/Navbar";
 
 export default function ShoppingList() {
-    const logOut = useAuthStore((state) => state.logOut);
 
     return (
-        <div className="">
-            ShoppingList
-
-            <button onClick={logOut}>Logout</button>
-        </div>
+        <>
+            <Navbar />
+            <GroupList />
+        </>
     )
 }
