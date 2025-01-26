@@ -3,7 +3,7 @@ import { DialogContent, DialogDescription, DialogHeader, DialogTitle } from "../
 import { Form, FormControl, FormField, FormItem, FormMessage } from "../ui/form";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
-import { useState } from "react";
+import { useAddMemberToGroup } from "@/hooks/useGroup";
 
 export default function AddGroup() {
     const form = useForm<Group>({
@@ -12,14 +12,7 @@ export default function AddGroup() {
             members: [],
         },
     });
-    const [member, setMember] = useState<string>("");
-
-    const addMember = () => {
-        if (member) {
-            form.setValue("members", [...form.getValues("members"), member]);
-            setMember('');
-        }
-    };
+    const { member, setMember, addMember } = useAddMemberToGroup(form);
 
     return (
         <DialogContent className="rounded-lg">

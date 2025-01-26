@@ -6,7 +6,7 @@ import {
 } from 'firebase/auth';
 import useAuthStore from '../stores/authStore';
 import { auth } from '@/services/firebase.config';
-import { addUserToFirestore } from '@/lib/utils';
+import { addDataToFirestore } from '@/lib/utils';
 
 export const useLoginWithGoogle = () => {
     const googleSignIn = useAuthStore((state) => state.googleSignIn);
@@ -55,8 +55,7 @@ export const useRegister = () => {
 
         onSuccess: async (user) => {
             setUser(user);
-            await addUserToFirestore(user.uid, user.email!, user.displayName!);
-
+            await addDataToFirestore("users", user.uid, { username: user.displayName, email: user.email });
         },
         onError: (error) => {
             console.error('Registration failed:', error.message);

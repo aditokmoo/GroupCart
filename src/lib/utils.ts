@@ -7,15 +7,11 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
 }
 
-export const addUserToFirestore = async (uid: string, email: string, username: string) => {
+export const addDataToFirestore = async (collection: string, id: string, data: FirestoreData): Promise<void> => {
   try {
-    await setDoc(doc(db, "users", uid), {
-      email,
-      username,
-      createdAt: new Date(),
-    });
+    await setDoc(doc(db, collection, id), data);
   } catch (error) {
-    console.error('Failed to add user to Firestore:', error);
+    console.error('Failed to add data to Firestore:', error);
     throw error;
   }
-};
+}
