@@ -6,6 +6,7 @@ import {
     signOut,
 } from 'firebase/auth';
 import { auth } from '@/services/firebase.config';
+import { addUserToFirestore } from '@/lib/utils';
 
 interface AuthState {
     user: User | null;
@@ -25,7 +26,9 @@ const useAuthStore = create<AuthState>((set) => ({
     googleSignIn: async () => {
         const provider = new GoogleAuthProvider();
         try {
-            await signInWithPopup(auth, provider);
+            const { user } = await signInWithPopup(auth, provider);
+            await addUserToFirestore(user.uid, user.email!, user.displayName!);
+            console.log(user)
         } catch (error) {
             console.error('Error during Google Sign-In:', error);
         }

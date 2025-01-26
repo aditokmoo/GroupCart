@@ -1,18 +1,20 @@
 import OAuthButtons from "./OAuthButtons";
 import { useForm } from "react-hook-form";
-import { authSchema } from "@/lib/zodSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import AuthForm from "./AuthForm";
 import { Link } from "react-router-dom";
 import { useRegister } from "@/hooks/useAuth";
-import { Form } from "@/components/ui/form";
+import { Form, FormControl, FormField, FormItem, FormMessage } from "@/components/ui/form";
 import { Button } from "@/components/ui/button";
+import { RegisterInputFields } from "@/lib/constants";
+import { Input } from "@/components/ui/input";
+import { registerSchema } from "@/lib/zodSchema";
 
 export default function Register() {
-    const form = useForm<z.infer<typeof authSchema>>({
-        resolver: zodResolver(authSchema),
+    const form = useForm<z.infer<typeof registerSchema>>({
+        resolver: zodResolver(registerSchema),
         defaultValues: {
+            username: '',
             email: '',
             password: ''
         }
@@ -27,7 +29,21 @@ export default function Register() {
 
             <Form {...form}>
                 <form onSubmit={form.handleSubmit((data) => createAccount(data))} className="flex flex-col gap-4 mt-28">
-                    <AuthForm form={form} />
+                    {RegisterInputFields.map(({ name, type, placeholder }) => (
+                        <FormField
+                            key={name}
+                            control={form.control}
+                            name={name}
+                            render={({ field }) => (
+                                <FormItem>
+                                    <FormControl>
+                                        <Input type={type} placeholder={placeholder} {...field} />
+                                    </FormControl>
+                                    <FormMessage />
+                                </FormItem>
+                            )}
+                        />
+                    ))}
 
                     <Button radius="rounded" size="lg" className="my-6">
                         Register

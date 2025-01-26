@@ -1,14 +1,15 @@
 import useAuthStore from '@/stores/authStore';
+import { FaUserCircle } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 
 export default function Profile() {
     const { user, logOut } = useAuthStore();
 
-    console.log(user?.photoURL)
+    console.log(user)
 
     return (
         <div className="mt-52 flex flex-col gap-4 items-center justify-center">
-            <img src={user?.photoURL || ''} alt="" className='w-20 h-20' />
+            {user?.photoURL ? <img className="w-32 h-32 rounded-full" src={user?.photoURL} alt="" /> : <FaUserCircle className='text-[6rem]' />}
             <h2 className='text-4xl'>{user?.displayName}</h2>
             <span className='text-sm'>{user?.email}</span>
 

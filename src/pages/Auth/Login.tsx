@@ -1,17 +1,18 @@
-import { Form } from "@/components/ui/form";
+import { Form, FormControl, FormField, FormItem, FormMessage } from "@/components/ui/form";
 import { useLoginWithPassword } from "@/hooks/useAuth";
-import { authSchema } from "@/lib/zodSchema";
+import { loginSchema } from "@/lib/zodSchema";
 import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
 import { zodResolver } from "@hookform/resolvers/zod"
 import { z } from "zod";
 import OAuthButtons from "./OAuthButtons";
-import AuthForm from "./AuthForm";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { LoginInputFields } from "@/lib/constants";
 
 export default function Login() {
-    const form = useForm<z.infer<typeof authSchema>>({
-        resolver: zodResolver(authSchema),
+    const form = useForm<z.infer<typeof loginSchema>>({
+        resolver: zodResolver(loginSchema),
         defaultValues: {
             email: '',
             password: ''
@@ -27,7 +28,21 @@ export default function Login() {
 
             <Form {...form}>
                 <form onSubmit={form.handleSubmit((data) => loginWithEmailAndPassword(data))} className="flex flex-col gap-4 mt-28">
-                    <AuthForm form={form} />
+                    {LoginInputFields.map(({ name, type, placeholder }) => (
+                        <FormField
+                            key={name}
+                            control={form.control}
+                            name={name}
+                            render={({ field }) => (
+                                <FormItem>
+                                    <FormControl>
+                                        <Input type={type} placeholder={placeholder} {...field} />
+                                    </FormControl>
+                                    <FormMessage />
+                                </FormItem>
+                            )}
+                        />
+                    ))}
 
                     <Link to="/forgot-password" className="flex justify-end text-sm text-primary">
                         Forgot password?
