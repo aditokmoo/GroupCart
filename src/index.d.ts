@@ -6,6 +6,7 @@ interface UserRequest {
     email: string,
     password: string
 }
+
 interface User extends UserRequest {
     uid: string,
 }
@@ -14,7 +15,12 @@ type FirestoreData = Record<string, unknown>;
 
 interface Group {
     groupName: string,
+    createdBy: string,
     members: string[],
+    groupList: {
+        addedBy: string,
+        item: string,
+    }[],
 }
 
 interface RegisterInputFields {

@@ -3,16 +3,24 @@ import { DialogContent, DialogDescription, DialogHeader, DialogTitle } from "../
 import { Form, FormControl, FormField, FormItem, FormMessage } from "../ui/form";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
-import { useAddMemberToGroup } from "@/hooks/useGroup";
+import { useAddGroup, useAddMemberToGroup } from "@/hooks/useGroup";
+import { FaCheck } from "react-icons/fa";
+import useAuthStore from "@/stores/authStore";
 
 export default function AddGroup() {
+    const { user } = useAuthStore();
     const form = useForm<Group>({
         defaultValues: {
             groupName: "",
-            members: [],
+            createdBy: user?.email ? user.email : "",
+            members: user?.email ? [user.email] : [],
+            groupList: [],
         },
     });
     const { member, setMember, addMember } = useAddMemberToGroup(form);
+    const { mutate: createGroup, isPending: isCreatingGroup } = useAddGroup(form);
+
+    if (isCreatingGroup) return <h2>Loading...</h2>
 
     return (
         <DialogContent className="rounded-lg">
@@ -20,7 +28,7 @@ export default function AddGroup() {
                 <DialogTitle>Create Group</DialogTitle>
                 <DialogDescription>Enter group name and add members</DialogDescription>
                 <Form {...form}>
-                    <form onSubmit={form.handleSubmit((data) => console.log(data))} className="flex flex-col gap-7 pt-12">
+                    <form onSubmit={(e) => e.preventDefault()} className="flex flex-col gap-7 pt-12">
                         <FormField
                             control={form.control}
                             name="groupName"
@@ -49,8 +57,8 @@ export default function AddGroup() {
                                                 onChange={(e) => setMember(e.target.value)}
                                             />
                                             <Button
-                                                type="button"
-                                                className="absolute right-3 top-3 p-8 text-xs w-36"
+                                                type="submit"
+                                                className="absolute right-2 md:right-3 top-2 md:top-3 p-8 text-xs w-36"
                                                 onClick={addMember}
                                             >
                                                 Add
@@ -62,13 +70,14 @@ export default function AddGroup() {
                             )}
                         />
 
-                        <ul className="list-disc pl-6">
+                        <span className="px-2">Added Members: {form.getValues("members").length}</span>
+                        <ul className="list-none flex flex-wrap gap-4 mb-16 items-center md:items-start">
                             {form.getValues("members").map((member, index) => (
-                                <li key={index}>{member}</li>
+                                <li key={index} className="text-xs py-4 px-6 w-fit border border-gray-200 rounded-full flex items-center gap-2">{member} <FaCheck className="text-primary" /> </li>
                             ))}
                         </ul>
 
-                        <button className="bg-primary text-white py-4 rounded-md">Create group</button>
+                        <button onClick={form.handleSubmit((data) => createGroup(data))} className="bg-primary text-white py-4 rounded-md">Create group</button>
                     </form>
                 </Form>
             </DialogHeader>

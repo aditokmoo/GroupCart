@@ -55,7 +55,7 @@ export const useRegister = () => {
 
         onSuccess: async (user) => {
             setUser(user);
-            await addDataToFirestore("users", user.uid, { username: user.displayName, email: user.email });
+            await addDataToFirestore("users", user.uid, { uid: user.uid, username: user.displayName, email: user.email });
         },
         onError: (error) => {
             console.error('Registration failed:', error.message);

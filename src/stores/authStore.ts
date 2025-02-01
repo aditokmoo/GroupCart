@@ -27,7 +27,7 @@ const useAuthStore = create<AuthState>((set) => ({
         const provider = new GoogleAuthProvider();
         try {
             const { user } = await signInWithPopup(auth, provider);
-            await addDataToFirestore("users", user.uid, { username: user.displayName, email: user.email });
+            await addDataToFirestore("users", user.uid, { uid: user.uid, username: user.displayName, email: user.email });
             console.log(user)
         } catch (error) {
             console.error('Error during Google Sign-In:', error);
