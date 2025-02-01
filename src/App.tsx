@@ -3,11 +3,11 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom"
 import { useAuthListener } from "./hooks/useAuthListener";
 
 const Home = lazy(() => import('./pages/Home'));
-const Login = lazy(() => import('./pages/auth/Login'));
-const Register = lazy(() => import('./pages/auth/Register'));
+const Login = lazy(() => import('./pages/Auth/Login'));
+const Register = lazy(() => import('./pages/Auth/Register'));
+const AuthLayout = lazy(() => import('./pages/Auth/AuthLayout'));
 const Profile = lazy(() => import('./pages/Profile'));
 const ShoppingList = lazy(() => import('./pages/ShoppingList'));
-const AuthLayout = lazy(() => import('./pages/auth/AuthLayout'));
 const PrivateRoute = lazy(() => import('./components/PrivateRoute') as Promise<{ default: React.ComponentType<any> }>);
 const RestrictToAuth = lazy(() => import('./components/RestrictToAuth') as Promise<{ default: React.ComponentType<any> }>);
 
