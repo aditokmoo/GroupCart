@@ -1,4 +1,4 @@
-import useAuthStore from '@/stores/authStore';
+import useAuthStore from '../stores/authStore';
 import { FaUserCircle } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 

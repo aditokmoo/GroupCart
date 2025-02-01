@@ -3,9 +3,9 @@ import { DialogContent, DialogDescription, DialogHeader, DialogTitle } from "../
 import { Form, FormControl, FormField, FormItem, FormMessage } from "../ui/form";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
-import { useAddGroup, useAddMemberToGroup } from "@/hooks/useGroup";
+import { useAddGroup, useAddMemberToGroup } from "../../hooks/useGroup";
 import { FaCheck } from "react-icons/fa";
-import useAuthStore from "@/stores/authStore";
+import useAuthStore from "../../stores/authStore";
 
 export default function AddGroup() {
     const { user } = useAuthStore();

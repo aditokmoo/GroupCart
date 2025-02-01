@@ -1,5 +1,5 @@
-import { addDataToFirestore, getUserGroups, isUserRegistered } from "@/lib/utils";
-import useAuthStore from "@/stores/authStore";
+import { addDataToFirestore, getUserGroups, isUserRegistered } from "../lib/utils";
+import useAuthStore from "../stores/authStore";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 import { UseFormReturn } from "react-hook-form";

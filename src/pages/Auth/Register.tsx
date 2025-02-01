@@ -1,14 +1,14 @@
-import OAuthButtons from "./OAuthButtons";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { Link } from "react-router-dom";
-import { useRegister } from "@/hooks/useAuth";
-import { Form, FormControl, FormField, FormItem, FormMessage } from "@/components/ui/form";
-import { Button } from "@/components/ui/button";
-import { RegisterInputFields } from "@/lib/constants";
-import { Input } from "@/components/ui/input";
-import { registerSchema } from "@/lib/zodSchema";
+import { useRegister } from "../../hooks/useAuth";
+import { Form, FormControl, FormField, FormItem, FormMessage } from "../../components/ui/form";
+import { Button } from "../../components/ui/button";
+import { RegisterInputFields } from "../../lib/constants";
+import { Input } from "../../components/ui/input";
+import { registerSchema } from "../../lib/zodSchema";
+import OAuthButtons from "./OAuthButtons";
 
 export default function Register() {
     const form = useForm<z.infer<typeof registerSchema>>({

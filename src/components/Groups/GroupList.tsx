@@ -2,7 +2,7 @@ import { FaPlus } from "react-icons/fa";
 import Group from "./Group";
 import { Dialog, DialogTrigger } from "../ui/dialog";
 import AddGroup from "./AddGroup";
-import { useGetGroups } from "@/hooks/useGroup";
+import { useGetGroups } from "../../hooks/useGroup";
 
 export default function GroupList() {
     const { data: groups, isLoading: isLoadingGroups } = useGetGroups();

@@ -1,14 +1,14 @@
-import { Form, FormControl, FormField, FormItem, FormMessage } from "@/components/ui/form";
-import { useLoginWithPassword } from "@/hooks/useAuth";
-import { loginSchema } from "@/lib/zodSchema";
+import { Form, FormControl, FormField, FormItem, FormMessage } from "../../components/ui/form";
+import { useLoginWithPassword } from "../../hooks/useAuth";
+import { loginSchema } from "../../lib/zodSchema";
 import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
 import { zodResolver } from "@hookform/resolvers/zod"
 import { z } from "zod";
+import { Button } from "../../components/ui/button";
+import { Input } from "../../components/ui/input";
+import { LoginInputFields } from "../../lib/constants";
 import OAuthButtons from "./OAuthButtons";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { LoginInputFields } from "@/lib/constants";
 
 export default function Login() {
     const form = useForm<z.infer<typeof loginSchema>>({

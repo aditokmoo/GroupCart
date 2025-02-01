@@ -1,4 +1,4 @@
-import { useLoginWithGoogle } from "@/hooks/useAuth";
+import { useLoginWithGoogle } from "../../hooks/useAuth";
 
 export default function OAuthButtons() {
     const handleGoogleSignIn = useLoginWithGoogle();
