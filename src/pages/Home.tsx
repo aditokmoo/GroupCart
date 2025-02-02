@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 
 export default function Home() {
     return (
-        <div className="flex items-center justify-center h-screen bg-gray-100">
+        <div className="flex items-center justify-center h-screen bg-light-primary">
             <section className="text-center">
                 <img src="/images/logo.webp" alt="GroupCart Logo" className="w-24 mx-auto mb-8" />
                 <h1 className="text-4xl font-bold text-gray-800">Group<span className="text-primary">Cart</span></h1>

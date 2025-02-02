@@ -10,7 +10,7 @@ export default function AuthLayout({ children, headerMessage }: { children: Reac
                 <p className="text-gray-300 text-xs font-light">{headerMessage}</p>
             </div>
 
-            <div className="bg-white h-full rounded-t-2xl p-8">
+            <div className="bg-white h-custom-screen rounded-t-2xl p-8">
                 {children}
             </div>
 

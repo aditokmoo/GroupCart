@@ -9,6 +9,7 @@ export default {
 			},
 			backgroundColor: {
 				primary: '#FF6347',
+				'light-primary': '#fff2ee'
 			},
 			colors: {
 				primary: {

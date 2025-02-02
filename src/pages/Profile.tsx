@@ -8,7 +8,7 @@ export default function Profile() {
     console.log(user)
 
     return (
-        <div className="mt-52 flex flex-col gap-4 items-center justify-center">
+        <div className="pt-52 bg-light-primary h-screen flex flex-col gap-4 items-center">
             {user?.photoURL ? <img className="w-32 h-32 rounded-full" src={user?.photoURL} alt="" /> : <FaUserCircle className='text-[6rem]' />}
             <h2 className='text-4xl'>{user?.displayName}</h2>
             <span className='text-sm'>{user?.email}</span>
