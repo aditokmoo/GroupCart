@@ -14,6 +14,7 @@ interface User extends UserRequest {
 type FirestoreData = Record<string, unknown>;
 
 interface Group {
+    id: string,
     groupName: string,
     createdBy: string,
     members: string[],

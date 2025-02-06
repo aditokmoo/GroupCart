@@ -19,27 +19,18 @@ export const addDataToFirestore = async (collection: string, id: string, data: F
 
 export const getUserGroups = async (userEmail: string) => {
   try {
-    // Referenca na grupnu kolekciju
     const groupsCollectionRef = collection(db, "groups");
-
-    // Upit za filtriranje grupa gde je userEmail u members
     const q = query(groupsCollectionRef, where("members", "array-contains", userEmail));
-
-    // Dohvatimo sve dokumente koji odgovaraju upitu
     const querySnapshot = await getDocs(q);
 
-    // Ako nema rezultata, vraćamo prazan niz
-    if (querySnapshot.empty) {
-      return [];
-    }
+    if (querySnapshot.empty) return []
 
-    // Mapiramo sve dokumente u rezultat
     const groups = querySnapshot.docs.map((doc) => ({
       id: doc.id,
       ...doc.data(),
     }));
 
-    return groups; // Vraća listu grupa gde je korisnik član
+    return groups;
   } catch (error) {
     console.error("Error getting groups:", error);
     throw error;
