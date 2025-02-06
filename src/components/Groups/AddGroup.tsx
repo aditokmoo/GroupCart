@@ -6,10 +6,13 @@ import { Button } from "../ui/button";
 import { useAddGroup, useAddMemberToGroup } from "../../hooks/useGroup";
 import { FaCheck } from "react-icons/fa";
 import useAuthStore from "../../stores/authStore";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { groupSchema } from "../../lib/zodSchema";
 
 export default function AddGroup() {
     const { user } = useAuthStore();
     const form = useForm<Group>({
+        resolver: zodResolver(groupSchema),
         defaultValues: {
             groupName: "",
             createdBy: user?.email ? user.email : "",
