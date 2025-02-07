@@ -53,3 +53,20 @@ export const isUserRegistered = async (
     throw error;
   }
 };
+
+export const getUser = async (email: string) => {
+  try {
+    const usersCollectionRef = collection(db, "users");
+    const q = query(usersCollectionRef, where("email", "==", email));
+    const querySnapshot = await getDocs(q);
+
+    if (querySnapshot.empty) return null
+
+    const user = querySnapshot.docs[0].data();
+
+    return user;
+  } catch (error) {
+    console.error("Error getting user:", error);
+    throw error;
+  }
+};

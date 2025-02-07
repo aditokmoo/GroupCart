@@ -9,7 +9,7 @@ import useAuthStore from "../../stores/authStore";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { groupSchema } from "../../lib/zodSchema";
 
-export default function AddGroup() {
+export default function AddGroup({ setIsOpen }: { setIsOpen: () => void }) {
     const { user } = useAuthStore();
     const form = useForm<Group>({
         resolver: zodResolver(groupSchema),
@@ -76,11 +76,11 @@ export default function AddGroup() {
                         <span className="px-2">Added Members: {form.getValues("members").length}</span>
                         <ul className="list-none flex flex-wrap gap-4 mb-16 items-center md:items-start">
                             {form.getValues("members").map((member, index) => (
-                                <li key={index} className="text-xs py-4 px-6 w-fit border border-gray-200 rounded-full flex items-center gap-2">{member} <FaCheck className="text-primary" /> </li>
+                                <li key={index} className="text-xs py-4 px-6 w-fit border border-gray-200 rounded-full flex items-center gap-2">{member === user?.email ? "You" : member} <FaCheck className="text-primary" /> </li>
                             ))}
                         </ul>
 
-                        <button onClick={form.handleSubmit((data) => createGroup(data))} className="bg-primary text-white py-4 rounded-md">Create group</button>
+                        <button onClick={form.handleSubmit((data) => { createGroup(data); setIsOpen() })} className="bg-primary text-white py-4 rounded-md">Create group</button>
                     </form>
                 </Form>
             </DialogHeader>

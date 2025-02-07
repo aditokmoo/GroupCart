@@ -4,9 +4,11 @@ import { Dialog, DialogTrigger } from "../ui/dialog";
 import { useGetGroups } from "../../hooks/useGroup";
 
 import AddGroup from "./AddGroup";
+import { useState } from "react";
 
 export default function GroupList() {
     const { data: groups, isLoading: isLoadingGroups } = useGetGroups();
+    const [isOpen, setIsOpen] = useState<boolean>(false)
 
     if (isLoadingGroups) return <h2>Loading...</h2>
 
@@ -19,9 +21,9 @@ export default function GroupList() {
             </div>
 
 
-            <Dialog>
+            <Dialog open={isOpen} onOpenChange={setIsOpen}>
                 <DialogTrigger className="fixed bottom-10 right-8 p-4 border-2 border-primary rounded-full"><FaPlus className="text-2xl text-primary" /></DialogTrigger>
-                <AddGroup />
+                <AddGroup setIsOpen={() => setIsOpen(false)} />
             </Dialog>
         </div>
     )

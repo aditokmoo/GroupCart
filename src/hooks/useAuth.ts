@@ -1,4 +1,4 @@
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQuery } from '@tanstack/react-query';
 import {
     signInWithEmailAndPassword,
     createUserWithEmailAndPassword,
@@ -6,7 +6,7 @@ import {
 } from 'firebase/auth';
 import useAuthStore from '../stores/authStore';
 import { auth } from '../services/firebase.config';
-import { addDataToFirestore } from '../lib/utils';
+import { addDataToFirestore, getUser } from '../lib/utils';
 
 export const useLoginWithGoogle = () => {
     const googleSignIn = useAuthStore((state) => state.googleSignIn);
@@ -55,7 +55,7 @@ export const useRegister = () => {
 
         onSuccess: async (user) => {
             setUser(user);
-            await addDataToFirestore("users", user.uid, { uid: user.uid, username: user.displayName, email: user.email });
+            await addDataToFirestore("users", user.uid, { uid: user.uid, username: user.displayName, email: user.email, profileImage: user.photoURL });
         },
         onError: (error) => {
             console.error('Registration failed:', error.message);
@@ -64,3 +64,14 @@ export const useRegister = () => {
 
     return mutation;
 };
+
+export const useGetUser = () => {
+    const user = useAuthStore((state) => state.user);
+
+    const query = useQuery({
+        queryKey: ["get_user"],
+        queryFn: () => getUser(user?.email!),
+    })
+
+    return query;
+}
