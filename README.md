@@ -24,7 +24,7 @@ The **Smart Shopping List App** is a collaborative and intelligent shopping assi
 
 ## **How to Use?** 🚀
 
-1. Create or join a group using a unique group code.
+1. Create a group and invite your friends.
 2. Add items to your shared shopping list.
 3. Let the AI bot analyze your list and suggest what you might have missed.
 4. Collaborate in real-time with friends and family for a seamless shopping experience!
