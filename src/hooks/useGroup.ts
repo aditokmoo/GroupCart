@@ -48,8 +48,12 @@ export const useGetGroups = () => {
     const { user } = useAuthStore();
 
     const query = useQuery({
-        queryKey: ['groups'],
-        queryFn: () => getUserGroups(user?.email!),
+        queryKey: ['groups', user?.email],
+        queryFn: () => {
+            if (!user?.email) return Promise.resolve(null);
+            return getUserGroups(user.email)
+        },
+        enabled: !!user?.email
     });
 
     return query;

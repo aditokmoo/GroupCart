@@ -8,8 +8,8 @@ const Register = lazy(() => import('./pages/auth/Register'));
 const AuthLayout = lazy(() => import('./pages/auth/AuthLayout'));
 const Profile = lazy(() => import('./pages/Profile'));
 const ShoppingList = lazy(() => import('./pages/ShoppingList'));
-const PrivateRoute = lazy(() => import('./components/PrivateRoute') as Promise<{ default: React.ComponentType<any> }>);
-const RestrictToAuth = lazy(() => import('./components/RestrictToAuth') as Promise<{ default: React.ComponentType<any> }>);
+const PrivateRoute = lazy(() => import('./components/PrivateRoute'));
+const RestrictToAuth = lazy(() => import('./components/RestrictToAuth'));
 
 function App() {
   useAuthListener() // Check if user is logged in

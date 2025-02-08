@@ -69,9 +69,13 @@ export const useGetUser = () => {
     const user = useAuthStore((state) => state.user);
 
     const query = useQuery({
-        queryKey: ["get_user"],
-        queryFn: () => getUser(user?.email!),
-    })
+        queryKey: ["get_user", user?.email],
+        queryFn: () => {
+            if (!user?.email) return Promise.resolve(null);
+            return getUser(user.email);
+        },
+        enabled: !!user?.email,
+    });
 
     return query;
 }

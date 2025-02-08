@@ -54,7 +54,7 @@ export default function Login() {
                 </form>
             </Form>
 
-            <Link to='/register' className="flex justify-center gap-2 text-sm">Don't have account? <span className="text-primary">Register here</span></Link>
+            <Link to='/register' className="flex justify-center gap-2 text-sm">{`Don't have account?`}<span className="text-primary">Register here</span></Link>
 
         </div>
     )
