@@ -1,6 +1,7 @@
 import { lazy, Suspense } from "react"
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom"
 import { useAuthListener } from "./hooks/useAuthListener";
+import AppLayout from "./layout/AppLayout";
 
 const Home = lazy(() => import('./pages/Home'));
 const Login = lazy(() => import('./pages/auth/Login'));
@@ -8,6 +9,7 @@ const Register = lazy(() => import('./pages/auth/Register'));
 const AuthLayout = lazy(() => import('./pages/auth/AuthLayout'));
 const Profile = lazy(() => import('./pages/Profile'));
 const ShoppingList = lazy(() => import('./pages/ShoppingList'));
+const Group = lazy(() => import('./pages/Group'));
 const PrivateRoute = lazy(() => import('./components/PrivateRoute'));
 const RestrictToAuth = lazy(() => import('./components/RestrictToAuth'));
 
@@ -35,19 +37,29 @@ function App() {
             </RestrictToAuth>
           }
           />
-          <Route path="/shopping-list" element={
-            <PrivateRoute>
-              <ShoppingList />
-            </PrivateRoute>
-          }
-          />
 
-          <Route path="/profile" element={
-            <PrivateRoute>
-              <Profile />
-            </PrivateRoute>
-          }
-          />
+          <Route element={<AppLayout />}>
+            <Route path="/shopping-list" element={
+              <PrivateRoute>
+                <ShoppingList />
+              </PrivateRoute>
+            }
+            />
+
+            <Route path="/shopping-list/:groupId" element={
+              <PrivateRoute>
+                <Group />
+              </PrivateRoute>
+            }
+            />
+
+            <Route path="/profile" element={
+              <PrivateRoute>
+                <Profile />
+              </PrivateRoute>
+            }
+            />
+          </Route>
         </Routes>
       </Suspense>
     </Router>
