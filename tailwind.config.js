@@ -9,13 +9,18 @@ export default {
 			},
 			backgroundColor: {
 				primary: '#FF6347',
-				'light-primary': '#fff2ee'
+				'light-primary': '#fff2ee',
+				success: '#1AFF8C',
+				pending: '#FF1A1A',
+				"light-green": '#2DBAA2'
 			},
 			colors: {
 				primary: {
 					DEFAULT: '#FF6347',
 					foreground: 'hsl(var(--primary-foreground))'
 				},
+				success: '#019512',
+				pending: '#FF1A1A',
 				background: 'hsl(var(--background))',
 				foreground: 'hsl(var(--foreground))',
 				card: {

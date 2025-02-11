@@ -5,7 +5,7 @@ import { Dialog, DialogTrigger } from "../components/ui/dialog";
 import Group from "../components/Groups/Group";
 import { FaPlus } from "react-icons/fa";
 
-export default function ShoppingList() {
+export default function GroupList() {
     const { data: groups, isLoading: isLoadingGroups } = useGetGroups();
     const [isOpen, setIsOpen] = useState<boolean>(false)
 

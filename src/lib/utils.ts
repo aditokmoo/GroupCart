@@ -1,6 +1,6 @@
 import { db } from "../services/firebase.config";
 import { clsx, type ClassValue } from "clsx"
-import { collection, doc, getDocs, query, setDoc, where } from "firebase/firestore";
+import { collection, doc, getDoc, getDocs, query, setDoc, where } from "firebase/firestore";
 import { twMerge } from "tailwind-merge"
 
 export function cn(...inputs: ClassValue[]) {
@@ -17,10 +17,10 @@ export const addDataToFirestore = async (collection: string, id: string, data: F
   }
 }
 
-export const getUserGroups = async (userEmail: string) => {
+export const getUserGroups = async (groupQuery: string, groupValue: string) => {
   try {
     const groupsCollectionRef = collection(db, "groups");
-    const q = query(groupsCollectionRef, where("members", "array-contains", userEmail));
+    const q = query(groupsCollectionRef, where(groupQuery, "array-contains", groupValue));
     const querySnapshot = await getDocs(q);
 
     if (querySnapshot.empty) return []
@@ -33,6 +33,22 @@ export const getUserGroups = async (userEmail: string) => {
     return groups;
   } catch (error) {
     console.error("Error getting groups:", error);
+    throw error;
+  }
+};
+
+export const getGroup = async (groupId: string) => {
+  try {
+    const groupRef = doc(db, "groups", groupId);
+    const groupSnap = await getDoc(groupRef);
+
+    if (!groupSnap.exists()) {
+      return null; // Vraća null ako grupa ne postoji
+    }
+
+    return { id: groupSnap.id, ...groupSnap.data() };
+  } catch (error) {
+    console.error("Error getting group:", error);
     throw error;
   }
 };

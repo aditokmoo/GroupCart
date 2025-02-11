@@ -1,4 +1,4 @@
-import { addDataToFirestore, getUserGroups, isUserRegistered } from "../lib/utils";
+import { addDataToFirestore, getGroup, getUserGroups, isUserRegistered } from "../lib/utils";
 import useAuthStore from "../stores/authStore";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
@@ -51,9 +51,22 @@ export const useGetGroups = () => {
         queryKey: ['groups', user?.email],
         queryFn: () => {
             if (!user?.email) return Promise.resolve(null);
-            return getUserGroups(user.email)
+            return getUserGroups('members', user.email)
         },
         enabled: !!user?.email
+    });
+
+    return query;
+}
+
+export const useGetGroup = (groupId: string) => {
+    const query = useQuery({
+        queryKey: ['group', groupId],
+        queryFn: () => {
+            if (!groupId) return Promise.resolve(null);
+            return getGroup(groupId)
+        },
+        enabled: !!groupId
     });
 
     return query;

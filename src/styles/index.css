@@ -32,6 +32,10 @@ body {
   position: relative;
 }
 
+input {
+  outline: none
+}
+
 @layer base {
   :root {
     --background: 0 0% 100%;

@@ -8,7 +8,7 @@ const Login = lazy(() => import('./pages/auth/Login'));
 const Register = lazy(() => import('./pages/auth/Register'));
 const AuthLayout = lazy(() => import('./pages/auth/AuthLayout'));
 const Profile = lazy(() => import('./pages/Profile'));
-const ShoppingList = lazy(() => import('./pages/ShoppingList'));
+const GroupList = lazy(() => import('./pages/GroupList'));
 const Group = lazy(() => import('./pages/Group'));
 const PrivateRoute = lazy(() => import('./components/PrivateRoute'));
 const RestrictToAuth = lazy(() => import('./components/RestrictToAuth'));
@@ -41,7 +41,7 @@ function App() {
           <Route element={<AppLayout />}>
             <Route path="/shopping-list" element={
               <PrivateRoute>
-                <ShoppingList />
+                <GroupList />
               </PrivateRoute>
             }
             />
