@@ -1,7 +1,7 @@
 import { GoChevronDown } from "react-icons/go";
 import { MdDragIndicator } from "react-icons/md";
 
-export default function ShoppingItem({ data }: { data: { name: string, price: string, status: string } }) {
+export default function ShoppingItem({ data }: { data: ShoppingItem }) {
     return (
         <div className="relative px-10 py-6 rounded-[1.7rem] bg-white w-full shadow-md">
 

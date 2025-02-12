@@ -7,8 +7,11 @@ interface UserRequest {
     password: string
 }
 
-interface User extends UserRequest {
+interface User {
     uid: string,
+    profileImage: string,
+    username: string,
+    email: string
 }
 
 type FirestoreData = Record<string, unknown>;
@@ -18,10 +21,16 @@ interface Group {
     groupName: string,
     createdBy: string,
     members: string[],
-    groupList: {
-        addedBy: string,
-        item: string,
-    }[],
+    groupList: ShoppingItem[],
+}
+
+interface ShoppingItem {
+    id: string,
+    name: string,
+    addedBy: string,
+    price: number,
+    status: 'success' | 'pending'
+    timestamp: Timestamp
 }
 
 interface RegisterInputFields {

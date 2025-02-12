@@ -9,7 +9,6 @@ export function cn(...inputs: ClassValue[]) {
 
 export const addDataToFirestore = async (collection: string, id: string, data: FirestoreData): Promise<void> => {
   try {
-    console.log(data)
     await setDoc(doc(db, collection, id), data);
   } catch (error) {
     console.error('Failed to add data to Firestore:', error);
@@ -17,7 +16,7 @@ export const addDataToFirestore = async (collection: string, id: string, data: F
   }
 }
 
-export const getUserGroups = async (groupQuery: string, groupValue: string) => {
+export const getUserGroups = async (groupQuery: string, groupValue: string): Promise<Group[] | null> => {
   try {
     const groupsCollectionRef = collection(db, "groups");
     const q = query(groupsCollectionRef, where(groupQuery, "array-contains", groupValue));
@@ -27,7 +26,10 @@ export const getUserGroups = async (groupQuery: string, groupValue: string) => {
 
     const groups = querySnapshot.docs.map((doc) => ({
       id: doc.id,
-      ...doc.data(),
+      groupName: doc.data().groupName,
+      createdBy: doc.data().createdBy,
+      members: doc.data().members,
+      groupList: doc.data().groupList,
     }));
 
     return groups;
@@ -37,16 +39,17 @@ export const getUserGroups = async (groupQuery: string, groupValue: string) => {
   }
 };
 
-export const getGroup = async (groupId: string) => {
+export const getGroup = async (groupId: string): Promise<Group | null> => {
   try {
     const groupRef = doc(db, "groups", groupId);
     const groupSnap = await getDoc(groupRef);
 
     if (!groupSnap.exists()) {
-      return null; // Vraća null ako grupa ne postoji
+      return null;
     }
 
-    return { id: groupSnap.id, ...groupSnap.data() };
+    const data = groupSnap.data() as Omit<Group, 'id'>
+    return { id: groupSnap.id, ...data };
   } catch (error) {
     console.error("Error getting group:", error);
     throw error;
@@ -70,7 +73,7 @@ export const isUserRegistered = async (
   }
 };
 
-export const getUser = async (email: string) => {
+export const getUser = async (email: string): Promise<User | null> => {
   try {
     const usersCollectionRef = collection(db, "users");
     const q = query(usersCollectionRef, where("email", "==", email));
@@ -78,7 +81,14 @@ export const getUser = async (email: string) => {
 
     if (querySnapshot.empty) return null
 
-    const user = querySnapshot.docs[0].data();
+    const data = querySnapshot.docs[0].data()
+
+    const user = {
+      uid: data.uid,
+      email: data.email,
+      username: data.username,
+      profileImage: data.profileImage
+    }
 
     return user;
   } catch (error) {
