@@ -4,6 +4,8 @@ import { useAddShoppingItem } from "../../hooks/useShoppingList";
 import { MdOutlineCameraAlt } from "react-icons/md";
 import { useForm } from "react-hook-form";
 import useAuthStore from "../../stores/authStore";
+import { Button } from "../ui/button";
+import { Loader2 } from "lucide-react";
 
 export default function ShoppingList({ data }: { data?: Group | null }) {
     const { user } = useAuthStore();
@@ -16,8 +18,6 @@ export default function ShoppingList({ data }: { data?: Group | null }) {
         }
     })
     const { mutate: addShoppingItem, isPending: isAddingShoppingItem } = useAddShoppingItem();
-
-    if (isAddingShoppingItem) return <h2>Loading...</h2>
 
     if (!data) return <h2>Loading...</h2>;
     console.log(data)
@@ -44,7 +44,7 @@ export default function ShoppingList({ data }: { data?: Group | null }) {
                 <form className="flex items-center w-full gap-8 justify-between py-10 text-sm bg-light-primary">
                     <input {...form.register('name')} name="name" type="text" placeholder="Add new item" className="w-full p-4 bg-light-primary border-b border-primary" />
                     <input {...form.register('price')} name="price" type="number" placeholder="Add price" className="w-2/4 p-4 bg-light-primary text-center border-b border-primary" />
-                    <button className="p-4 rounded-md border border-primary text-primary w-1/3 text-sm" onClick={form.handleSubmit((data) => addShoppingItem(data as ShoppingItem))}>Add</button>
+                    <Button size="lg" className="rounded-md border border-primary text-xs text-white w-1/3" onClick={form.handleSubmit((data) => addShoppingItem(data as ShoppingItem))} disabled={isAddingShoppingItem}>{isAddingShoppingItem ? <Loader2 className="animate-spin" /> : 'Add'}</Button>
                     <button className="p-4 rounded-md border border-primary text-primary text-lg"><MdOutlineCameraAlt /></button>
                 </form>
             </div>

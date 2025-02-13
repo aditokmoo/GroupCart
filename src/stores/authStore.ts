@@ -6,7 +6,7 @@ import {
     signOut,
 } from 'firebase/auth';
 import { auth } from '../services/firebase.config';
-import { addDataToFirestore } from '../lib/utils';
+import { addDataToFirestore } from '../utils';
 
 interface AuthState {
     user: User | null;

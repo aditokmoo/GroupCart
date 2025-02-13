@@ -1,4 +1,5 @@
-import { addDataToFirestore, getGroup, getUserGroups, isUserRegistered } from "../lib/utils";
+import { getGroup, getUserGroups } from "../services/groupService";
+import { addDataToFirestore, isUserRegistered } from "../utils";
 import useAuthStore from "../stores/authStore";
 import { useMutation, UseMutationResult, useQuery, useQueryClient, UseQueryResult } from "@tanstack/react-query";
 import { useState } from "react";

@@ -6,7 +6,8 @@ import {
 } from 'firebase/auth';
 import useAuthStore from '../stores/authStore';
 import { auth } from '../services/firebase.config';
-import { addDataToFirestore, getUser } from '../lib/utils';
+import { addDataToFirestore } from '../utils';
+import { getUser } from '../services/userService';
 
 export const useLoginWithGoogle = () => {
     const googleSignIn = useAuthStore((state) => state.googleSignIn);
