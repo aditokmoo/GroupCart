@@ -33,7 +33,7 @@ body {
 }
 
 input {
-  outline: none
+  outline: none;
 }
 
 @layer base {

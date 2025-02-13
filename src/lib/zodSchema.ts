@@ -19,3 +19,10 @@ export const groupSchema = z.object({
     createdBy: z.string(),
     groupList: z.array(z.object({ addedBy: z.string(), item: z.string() })),
 })
+
+export const shoppingListSchema = z.object({
+    name: z.string().min(3).max(25),
+    addedBy: z.string(),
+    price: z.union([z.number(), z.string().regex(/^\d+$/).transform(Number)]),
+    status: z.enum(['success', 'pending']),
+})
