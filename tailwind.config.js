@@ -5,7 +5,8 @@ export default {
 	theme: {
 		extend: {
 			height: {
-				'custom-screen': 'calc(100vh - 300px)'
+				'custom-screen': 'calc(100vh - 300px)',
+				'list-screen': 'calc(100vh - 182px)'
 			},
 			backgroundColor: {
 				primary: '#FF6347',
