@@ -6,7 +6,7 @@ export default {
 		extend: {
 			height: {
 				'custom-screen': 'calc(100vh - 300px)',
-				'list-screen': 'calc(100vh - 182px)'
+				'list-screen': 'calc(100dvh - 182px)'
 			},
 			backgroundColor: {
 				primary: '#FF6347',

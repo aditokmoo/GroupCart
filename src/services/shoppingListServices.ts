@@ -1,6 +1,7 @@
 import { arrayUnion, doc, Timestamp, updateDoc } from "firebase/firestore";
 import { db } from "./firebase.config";
 import { v4 as uuidv4 } from "uuid";
+import * as Tesseract from "tesseract.js";
 
 export const addItemToGroup = async (groupId: string, item: ShoppingItem): Promise<void> => {
     try {
@@ -24,3 +25,20 @@ export const addItemToGroup = async (groupId: string, item: ShoppingItem): Promi
         console.error("Greška pri dodavanju itema:", error);
     }
 };
+
+export const recognizeImageText = async (imgSrc: string) => {
+    try {
+        const { data: { text } } = await Tesseract.recognize(
+            imgSrc,
+            "bos",
+            {
+                logger: m => console.log(m),
+            }
+        );
+
+        return text;
+    } catch (error) {
+        console.error("OCR Error:", error);
+        return "";
+    }
+}
