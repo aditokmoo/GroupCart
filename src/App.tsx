@@ -1,69 +1,27 @@
-import { lazy, Suspense } from "react"
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom"
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { Suspense } from "react";
 import { useAuthListener } from "./hooks/useAuthListener";
-import AppLayout from "./layout/AppLayout";
-
-const Home = lazy(() => import('./pages/Home'));
-const Login = lazy(() => import('./pages/auth/Login'));
-const Register = lazy(() => import('./pages/auth/Register'));
-const AuthLayout = lazy(() => import('./pages/auth/AuthLayout'));
-const Profile = lazy(() => import('./pages/Profile'));
-const GroupList = lazy(() => import('./pages/GroupList'));
-const Group = lazy(() => import('./pages/Group'));
-const PrivateRoute = lazy(() => import('./components/PrivateRoute'));
-const RestrictToAuth = lazy(() => import('./components/RestrictToAuth'));
+import { routes } from "./routes";
 
 function App() {
-  useAuthListener() // Check if user is logged in
+  useAuthListener();
 
   return (
     <Router>
       <Suspense fallback={<div>Loading...</div>}>
         <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/login" element={
-            <RestrictToAuth>
-              <AuthLayout headerMessage="Welcome back">
-                <Login />
-              </AuthLayout>
-            </RestrictToAuth>
-          }
-          />
-          <Route path="/register" element={
-            <RestrictToAuth>
-              <AuthLayout headerMessage="Create your account">
-                <Register />
-              </AuthLayout>
-            </RestrictToAuth>
-          }
-          />
-
-          <Route element={<AppLayout />}>
-            <Route path="/shopping-list" element={
-              <PrivateRoute>
-                <GroupList />
-              </PrivateRoute>
-            }
-            />
-
-            <Route path="/shopping-list/:groupId" element={
-              <PrivateRoute>
-                <Group />
-              </PrivateRoute>
-            }
-            />
-
-            <Route path="/profile" element={
-              <PrivateRoute>
-                <Profile />
-              </PrivateRoute>
-            }
-            />
-          </Route>
+          {routes.map(({ path, element, children }) => (
+            <Route key={path} path={path} element={element}>
+              {children &&
+                children.map(({ path, element }) => (
+                  <Route key={path} path={path} element={element} />
+                ))}
+            </Route>
+          ))}
         </Routes>
       </Suspense>
     </Router>
-  )
+  );
 }
 
-export default App
+export default App;
