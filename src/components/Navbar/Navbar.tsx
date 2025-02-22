@@ -14,10 +14,12 @@ export default function Navbar() {
     return (
         <nav className="fixed top-0 z-40 left-0 w-full p-6 bg-white border-b border-gray-300">
             <div className="w-full flex items-center justify-between px-8">
-                <div className="flex items-center gap-3">
-                    <FaUserGroup className="text-xl" />
-                    <span className="text-sm relative top-[0.1rem]">3</span>
-                </div>
+                {isGroupOpen && (
+                    <div className="flex items-center gap-3">
+                        <FaUserGroup className="text-xl" />
+                        <span className="text-sm relative top-[0.1rem]">3</span>
+                    </div>
+                )}
                 <h2 className="text-center w-full">Welcome <span className="text-primary">{isGroupOpen ? 'to Group' : user?.displayName}</span></h2>
                 <Link to='/profile' className="text-3xl flex justify-end">{user?.photoURL ? <img className="w-12 h-12 object-cover rounded-full shadow-md border border-gray-50" src={user?.photoURL} alt="" /> : <FaUserCircle />}</Link>
             </div>
