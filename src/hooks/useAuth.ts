@@ -5,7 +5,7 @@ import {
     updateProfile,
 } from 'firebase/auth';
 import useAuthStore from '../stores/authStore';
-import { auth } from '../services/firebase.config';
+import { auth } from '../lib/firebase.config';
 import { addDataToFirestore } from '../utils';
 import { getUser } from '../services/userService';
 

@@ -28,7 +28,6 @@ export default function useShoppingCamera() {
             navigator.mediaDevices.removeEventListener("devicechange", checkCamera);
             if (state.cameraStream) {
                 state.cameraStream.getTracks().forEach((track) => track.stop());
-                console.log('jel radi ovo')
                 dispatch({ type: "SET_CAMERA_STREAM", payload: null });
             }
         };

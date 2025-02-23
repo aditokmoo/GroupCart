@@ -5,7 +5,7 @@ import {
     signInWithPopup,
     signOut,
 } from 'firebase/auth';
-import { auth } from '../services/firebase.config';
+import { auth } from '../lib/firebase.config';
 import { addDataToFirestore } from '../utils';
 
 interface AuthState {

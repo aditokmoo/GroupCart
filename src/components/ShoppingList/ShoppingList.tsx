@@ -12,8 +12,6 @@ export default function ShoppingList({ data }: { data?: Group | null }) {
     const { isActive, toggle } = useToggle();
     const { state, dispatch, handleCameraToggle, handleCameraCapture, webcamRef } = useShoppingCamera();
 
-    console.log(state)
-
     return (
         <div className="flex flex-col max-w-[700px] mx-auto w-full">
             <div className="bg-light-primary py-4 px-4 md:px-10">
@@ -38,7 +36,7 @@ export default function ShoppingList({ data }: { data?: Group | null }) {
                         handleCameraToggle={handleCameraToggle}
                         handleCameraCapture={handleCameraCapture}
                         setFacingMode={() => dispatch({ type: "SET_FACING_MODE", payload: state.facingMode === "user" ? "environment" : "user" })}
-                        webcamRef={webcamRef}
+                        ref={webcamRef}
                     />
                 )}
 

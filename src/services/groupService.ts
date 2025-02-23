@@ -1,5 +1,5 @@
 import { collection, doc, getDoc, getDocs, query, where } from "firebase/firestore";
-import { db } from "./firebase.config";
+import { db } from "../lib/firebase.config";
 
 export const getUserGroups = async (groupQuery: string, groupValue: string): Promise<Group[] | null> => {
     try {

@@ -1,4 +1,4 @@
-import { db } from "../services/firebase.config";
+import { db } from "../lib/firebase.config";
 import { clsx, type ClassValue } from "clsx"
 import { collection, doc, getDocs, query, setDoc, where } from "firebase/firestore";
 import { twMerge } from "tailwind-merge"

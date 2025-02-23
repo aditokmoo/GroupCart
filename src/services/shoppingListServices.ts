@@ -1,5 +1,5 @@
 import { arrayUnion, doc, Timestamp, updateDoc } from "firebase/firestore";
-import { db } from "./firebase.config";
+import { db } from "../lib/firebase.config";
 import { v4 as uuidv4 } from "uuid";
 import * as Tesseract from "tesseract.js";
 
