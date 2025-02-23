@@ -2,18 +2,12 @@ import { recognizeImageText } from "../../services/shoppingListServices";
 import { IoMdClose } from "react-icons/io";
 
 interface PropTypes {
-    toggle: (val: string) => void,
     capturedImage: string,
     facingMode: "user" | "environment",
-    setCapturedImage: React.Dispatch<React.SetStateAction<string | null>>,
+    setCapturedImage: () => void
 }
 
-export default function ShoppingCapture({ toggle, facingMode, capturedImage, setCapturedImage }: PropTypes) {
-    const closeImagePreview = () => {
-        setCapturedImage(null)
-        toggle('camera')
-    };
-
+export default function ShoppingCapture({ facingMode, capturedImage, setCapturedImage }: PropTypes) {
     return (
         <div className="fixed inset-0 z-50 bg-black flex items-center justify-center">
             <img
@@ -21,7 +15,7 @@ export default function ShoppingCapture({ toggle, facingMode, capturedImage, set
                 alt="Captured"
                 className={`w-full h-full object-cover ${facingMode === "user" ? "scale-x-[-1]" : ""}`}
             />
-            <button onClick={closeImagePreview} className="absolute top-10 right-10 text-4xl text-white">
+            <button onClick={setCapturedImage} className="absolute top-10 right-10 text-4xl text-white">
                 <IoMdClose />
             </button>
             <button onClick={async () => {

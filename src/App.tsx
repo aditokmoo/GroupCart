@@ -1,24 +1,15 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router } from "react-router-dom";
 import { Suspense } from "react";
-import { useAuthListener } from "./hooks/useAuthListener";
-import { routes } from "./routes";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import AppRoutes from "./routes/AppRoutes";
 
 function App() {
-  useAuthListener();
-
   return (
     <Router>
       <Suspense fallback={<div>Loading...</div>}>
-        <Routes>
-          {routes.map(({ path, element, children }) => (
-            <Route key={path} path={path} element={element}>
-              {children &&
-                children.map(({ path, element }) => (
-                  <Route key={path} path={path} element={element} />
-                ))}
-            </Route>
-          ))}
-        </Routes>
+        <QueryClientProvider client={new QueryClient()}>
+          <AppRoutes />
+        </QueryClientProvider>
       </Suspense>
     </Router>
   );

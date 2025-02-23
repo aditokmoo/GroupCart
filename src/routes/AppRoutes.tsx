@@ -1,6 +1,8 @@
 import { lazy } from "react";
 import PrivateRoute from "../components/PrivateRoute";
 import RestrictToAuth from "../components/RestrictToAuth";
+import { Route, Routes } from "react-router";
+import { useAuthListener } from "../hooks/useAuthListener";
 
 const Home = lazy(() => import("../pages/Home"));
 const Login = lazy(() => import("../pages/auth/Login"));
@@ -8,10 +10,10 @@ const Register = lazy(() => import("../pages/auth/Register"));
 const Profile = lazy(() => import("../pages/Profile"));
 const GroupList = lazy(() => import("../pages/GroupList"));
 const Group = lazy(() => import("../pages/Group"));
-const AuthLayout = lazy(() => import("../pages/auth/AuthLayout"));
+const AuthLayout = lazy(() => import("../layout/AuthLayout"));
 const AppLayout = lazy(() => import("../layout/AppLayout"));
 
-export const routes = [
+const routes = [
   { path: "/", element: <Home />, restricted: false },
   {
     path: "/login",
@@ -64,3 +66,22 @@ export const routes = [
     ],
   },
 ];
+
+const AppRoutes = () => {
+  useAuthListener();
+
+  return (
+    <Routes>
+      {routes.map(({ path, element, children }) => (
+        <Route key={path} path={path} element={element}>
+          {children &&
+            children.map(({ path, element }) => (
+              <Route key={path} path={path} element={element} />
+            ))}
+        </Route>
+      ))}
+    </Routes>
+  )
+}
+
+export default AppRoutes;
