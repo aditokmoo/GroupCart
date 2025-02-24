@@ -7,5 +7,9 @@ export default function PrivateRoute({ children }: { children: ReactNode }) {
 
     if (isLoading) return <div>Loading...</div>;
 
-    return user ? children : <Navigate to="/login" />;
+    if (!user) {
+        <Navigate to="/login" />
+    }
+
+    return children;
 }
