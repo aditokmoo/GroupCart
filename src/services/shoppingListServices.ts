@@ -1,4 +1,4 @@
-import { arrayUnion, doc, Timestamp, updateDoc } from "firebase/firestore";
+import { doc, runTransaction, Timestamp } from "firebase/firestore";
 import { db } from "../lib/firebase.config";
 import { v4 as uuidv4 } from "uuid";
 import * as Tesseract from "tesseract.js";
@@ -7,22 +7,33 @@ export const addItemToGroup = async (groupId: string, item: ShoppingItem): Promi
     try {
         const groupRef = doc(db, "groups", groupId);
 
-        const newItem = {
-            id: uuidv4(),
-            name: item.name,
-            addedBy: item.addedBy,
-            price: item.price,
-            status: item.status,
-            timestamp: Timestamp.now(),
-        };
+        await runTransaction(db, async (transaction) => {
+            const groupSnap = await transaction.get(groupRef);
+            if (!groupSnap.exists()) throw new Error("Grupa ne postoji");
 
-        await updateDoc(groupRef, {
-            groupList: arrayUnion(newItem),
+            const groupData = groupSnap.data();
+            const groupList = groupData.groupList || [];
+
+            const maxOrder = groupList.reduce((max: number, item: { order: number }) => Math.max(max, item.order || 0), 0);
+
+            const newItem = {
+                id: uuidv4(),
+                order: maxOrder + 1,
+                name: item.name,
+                addedBy: item.addedBy,
+                price: item.price,
+                status: item.status,
+                timestamp: Timestamp.now(),
+            };
+
+            transaction.update(groupRef, {
+                groupList: [...groupList, newItem],
+            });
         });
 
-        console.log("Item uspješno dodat!");
+        console.log("Item uspješno dodat");
     } catch (error) {
-        console.error("Greška pri dodavanju itema:", error);
+        console.error("Error when adding shopping item:", error);
     }
 };
 

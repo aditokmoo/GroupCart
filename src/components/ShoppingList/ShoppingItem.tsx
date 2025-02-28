@@ -1,11 +1,29 @@
 import { GoChevronDown } from "react-icons/go";
 import { MdDragIndicator } from "react-icons/md";
+import { useSortable } from '@dnd-kit/sortable';
 
 export default function ShoppingItem({ data }: { data: ShoppingItem }) {
-    return (
-        <div className="relative px-10 py-6 rounded-[1.7rem] bg-white w-full shadow-md">
+    const {
+        attributes,
+        listeners,
+        setNodeRef,
+        transform,
+        transition,
+    } = useSortable({ id: data.order });
 
-            <MdDragIndicator className="absolute left-[-2.4rem] top-10 cursor-grab text-xl" />
+    const style = {
+        transform: transform ? `translateY(${transform.y}px)` : undefined,
+        transition: transform ? transition : "none",
+    };
+
+    return (
+        <div ref={setNodeRef} style={style} className="relative px-10 py-6 rounded-[1.7rem] bg-white w-full shadow-md">
+
+            <MdDragIndicator
+                {...listeners}
+                {...attributes}
+                className="absolute left-[-2.4rem] top-10 cursor-grab text-xl focus:outline-none"
+            />
 
             <div className="flex justify-between items-center">
 

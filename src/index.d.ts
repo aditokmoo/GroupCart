@@ -28,6 +28,7 @@ interface ShoppingItem {
     id: string,
     name: string,
     addedBy: string,
+    order: number,
     price: number,
     status: 'success' | 'pending'
     timestamp: Timestamp

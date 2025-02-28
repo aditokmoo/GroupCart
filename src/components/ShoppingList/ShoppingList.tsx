@@ -1,16 +1,20 @@
 import useToggle from "../../hooks/useToggle";
 import MobileNav from "../Navbar/MobileNav";
 import { Dialog, DialogTrigger } from "../ui/dialog";
-import ShoppingCamera from "./ShoppingCamera";
-import ShoppingCapture from "./ShoppingCapture";
-import ShoppingForm from "./ShoppingForm";
-import ShoppingItem from "./ShoppingItem";
 import { FaPlus } from "react-icons/fa";
 import useShoppingCamera from "../../hooks/useShoppingCamera";
+import ShoppingForm from "./ShoppingForm";
+import ShoppingItem from "./ShoppingItem";
+import ShoppingCamera from "./ShoppingCamera";
+import ShoppingCapture from "./ShoppingCapture";
+import useDragDrop from "../../hooks/useDragDrop";
+import { SortableContext } from '@dnd-kit/sortable';
+import { DndContext } from "@dnd-kit/core";
 
 export default function ShoppingList({ data }: { data?: Group | null }) {
     const { isActive, toggle } = useToggle();
     const { state, dispatch, handleCameraToggle, handleCameraCapture, webcamRef } = useShoppingCamera();
+    const { handleDragEnd } = useDragDrop(data?.id || "");
 
     return (
         <div className="flex flex-col max-w-[700px] mx-auto w-full">
@@ -22,11 +26,18 @@ export default function ShoppingList({ data }: { data?: Group | null }) {
                     </div>
                     <p className="text-xs mr-20">Price</p>
                 </div>
-                <div className="relative flex flex-col gap-6 h-list-screen overflow-auto px-12 pb-12">
-                    {data?.groupList.map((item) => (
-                        <ShoppingItem data={item} key={item.id} />
-                    ))}
-                </div>
+                <DndContext onDragEnd={handleDragEnd}>
+                    <SortableContext items={data?.groupList?.map(item => item.order) || []}>
+                        <div className="relative flex flex-col gap-6 h-list-screen overflow-auto px-12 pb-12">
+                            {data?.groupList?.map((item) => (
+                                <ShoppingItem
+                                    key={item.order}
+                                    data={item}
+                                />
+                            ))}
+                        </div>
+                    </SortableContext>
+                </DndContext>
 
                 <MobileNav toggle={toggle} handleCameraToggle={handleCameraToggle} />
 

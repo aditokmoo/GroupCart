@@ -10,7 +10,7 @@ export default function Group() {
 
     if (isLoadingGroup) return <h2>Loading...</h2>;
 
-    if (user?.email && !groupData?.members.includes(user?.email)) return <Navigate to='/shopping-list' />;
+    if (user?.email && !groupData?.members?.includes(user?.email)) return <Navigate to='/shopping-list' />;
 
     return (
         <div className="flex flex-col lg:flex-row bg-light-primary h-screen pt-24 justify-between">
