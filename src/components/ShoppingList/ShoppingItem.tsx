@@ -22,7 +22,7 @@ export default function ShoppingItem({ data }: { data: ShoppingItem }) {
             <MdDragIndicator
                 {...listeners}
                 {...attributes}
-                className="absolute left-[-2.4rem] top-10 cursor-grab text-xl focus:outline-none"
+                className="absolute left-[-2.4rem] top-10 cursor-grab text-2xl focus:outline-none active:cursor-grabbing"
             />
 
             <div className="flex justify-between items-center">
