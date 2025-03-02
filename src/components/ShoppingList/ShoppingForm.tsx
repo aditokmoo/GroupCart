@@ -1,17 +1,16 @@
 import { Button } from "../ui/button";
 import { Controller, useForm } from "react-hook-form";
 import { useAddShoppingItem } from "../../hooks/useShoppingList";
-import useAuthStore from "../../stores/authStore";
 import { Loader2 } from "lucide-react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { shoppingListSchema } from "../../lib/zodSchema";
 import { Input } from "../ui/input";
 import { Form, FormControl, FormItem, FormMessage } from "../ui/form";
 import { DialogContent, DialogDescription, DialogHeader, DialogTitle } from "../ui/dialog";
-
+import { useCurrentUser } from "../../hooks/useAuth";
 
 export default function ShoppingForm({ toggle }: { toggle: (val: string) => void }) {
-    const { user } = useAuthStore();
+    const { data: user } = useCurrentUser();
     const form = useForm<ShoppingItem>({
         resolver: zodResolver(shoppingListSchema),
         defaultValues: {

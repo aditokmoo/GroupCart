@@ -40,7 +40,7 @@ export default function ShoppingItem({ data }: { data: ShoppingItem }) {
                 </div>
 
                 <div className="flex justify-center w-1/4">
-                    <p className="text-sm">{data.price}</p>
+                    <p className="text-sm">{data.price} BAM</p>
                 </div>
 
             </div>

@@ -3,18 +3,22 @@ import {
     signInWithEmailAndPassword,
     createUserWithEmailAndPassword,
     updateProfile,
+    onAuthStateChanged,
+    signOut,
 } from 'firebase/auth';
-import useAuthStore from '../stores/authStore';
 import { auth } from '../lib/firebase.config';
 import { addDataToFirestore } from '../utils';
 import { getUser } from '../services/userService';
+import { useNavigate } from 'react-router';
+import { googleSignIn } from '../services/authService';
 
 export const useLoginWithGoogle = () => {
-    const googleSignIn = useAuthStore((state) => state.googleSignIn);
+    const navigate = useNavigate();
 
     const handleGoogleSignIn = async () => {
         try {
             await googleSignIn();
+            navigate('/shopping-list')
         } catch (error) {
             console.error('Error during Google Sign-In:', error);
         }
@@ -24,13 +28,13 @@ export const useLoginWithGoogle = () => {
 }
 
 export const useLoginWithPassword = () => {
-    const setUser = useAuthStore((state) => state.setUser);
+    const navigate = useNavigate();
 
     const mutation = useMutation({
         mutationFn: ({ email, password }: UserRequest) =>
             signInWithEmailAndPassword(auth, email, password),
-        onSuccess: (data) => {
-            setUser(data.user);
+        onSuccess: () => {
+            navigate('/shopping-list');
         },
         onError: (error) => {
             console.error('Login failed:', error.message);
@@ -41,8 +45,6 @@ export const useLoginWithPassword = () => {
 };
 
 export const useRegister = () => {
-    const setUser = useAuthStore((state) => state.setUser);
-
     const mutation = useMutation({
         mutationFn: async ({ email, password, username }: { email: string, password: string, username: string }) => {
             const { user } = await createUserWithEmailAndPassword(auth, email, password);
@@ -55,8 +57,7 @@ export const useRegister = () => {
         },
 
         onSuccess: async (user) => {
-            setUser(user);
-            await addDataToFirestore("users", user.uid, { uid: user.uid, username: user.displayName, email: user.email, profileImage: user.photoURL });
+            await addDataToFirestore("users", user.uid, { uid: user.uid, username: user.displayName, email: user.email, photoURL: user.photoURL });
         },
         onError: (error) => {
             console.error('Registration failed:', error.message);
@@ -67,7 +68,7 @@ export const useRegister = () => {
 };
 
 export const useGetUser = () => {
-    const user = useAuthStore((state) => state.user);
+    const { data: user } = useCurrentUser();
 
     const query = useQuery({
         queryKey: ["get_user", user?.email],
@@ -79,4 +80,45 @@ export const useGetUser = () => {
     });
 
     return query;
+}
+
+export const useCurrentUser = () => {
+    const { data, isLoading } = useQuery({
+        queryKey: ["user"],
+        queryFn: () =>
+            new Promise<User | null>((resolve) => {
+                const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+                    if (currentUser) {
+                        resolve({
+                            uid: currentUser.uid,
+                            email: currentUser.email || '',
+                            displayName: currentUser.displayName || '',
+                            photoURL: currentUser.photoURL || '',
+                        });
+                    } else {
+                        resolve(null);
+                    }
+                });
+
+                return () => unsubscribe();
+            }),
+    });
+
+    return { data, isLoading }
+}
+
+export function useLogout() {
+    const navigate = useNavigate();
+
+    const { mutate, isPending } = useMutation({
+        mutationFn: () => signOut(auth),
+        onSuccess: () => {
+            navigate('/login')
+        },
+        onError: (error) => {
+            console.error('Error with signOut:', error);
+        },
+    });
+
+    return { mutate, isPending }
 }

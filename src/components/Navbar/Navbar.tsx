@@ -1,12 +1,12 @@
 import { FaUserGroup } from "react-icons/fa6";
-import useAuthStore from "../../stores/authStore";
 import { FaUserCircle } from "react-icons/fa";
 import { useParams } from "react-router";
 import { useLocation } from "react-router";
 import { Link } from "react-router-dom";
+import { useCurrentUser } from "../../hooks/useAuth";
 
 export default function Navbar() {
-    const { user } = useAuthStore();
+    const { data: user } = useCurrentUser();
     const { pathname } = useLocation();
     const { groupId } = useParams();
     const isGroupOpen = pathname === `/shopping-list/${groupId}`

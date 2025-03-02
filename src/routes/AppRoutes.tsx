@@ -2,7 +2,6 @@ import { lazy } from "react";
 import PrivateRoute from "../components/PrivateRoute";
 import RestrictToAuth from "../components/RestrictToAuth";
 import { Route, Routes } from "react-router";
-import { useAuthListener } from "../hooks/useAuthListener";
 
 const Home = lazy(() => import("../pages/Home"));
 const Login = lazy(() => import("../pages/auth/Login"));
@@ -68,8 +67,6 @@ const routes = [
 ];
 
 const AppRoutes = () => {
-  useAuthListener();
-
   return (
     <Routes>
       {routes.map(({ path, element, children }) => (

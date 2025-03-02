@@ -9,8 +9,8 @@ interface UserRequest {
 
 interface User {
     uid: string,
-    profileImage: string,
-    username: string,
+    photoURL: string,
+    displayName: string,
     email: string
 }
 

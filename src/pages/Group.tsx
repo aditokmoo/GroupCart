@@ -1,11 +1,11 @@
 import { Navigate, useParams } from "react-router";
 import { useGetGroup } from "../hooks/useGroup";
 import ShoppingList from "../components/ShoppingList/ShoppingList";
-import useAuthStore from "../stores/authStore";
+import { useCurrentUser } from "../hooks/useAuth";
 
 export default function Group() {
     const { groupId } = useParams();
-    const { user } = useAuthStore();
+    const { data: user } = useCurrentUser();
     const { data: groupData, isLoading: isLoadingGroup } = useGetGroup(groupId ?? '');
 
     if (isLoadingGroup) return <h2>Loading...</h2>;

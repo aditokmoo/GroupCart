@@ -24,7 +24,7 @@ export default function ShoppingList({ data }: { data?: Group | null }) {
                         <p>Status</p>
                         <p>Name</p>
                     </div>
-                    <p className="text-xs mr-20">Price</p>
+                    <p className="text-xs mr-28">Price</p>
                 </div>
                 <DndContext onDragEnd={handleDragEnd}>
                     <SortableContext items={data?.groupList?.map(item => item.order) || []}>

@@ -14,8 +14,8 @@ export const getUser = async (email: string): Promise<User | null> => {
         const user = {
             uid: data.uid,
             email: data.email,
-            username: data.username,
-            profileImage: data.profileImage
+            displayName: data.username,
+            photoURL: data.photoURL
         }
 
         return user;

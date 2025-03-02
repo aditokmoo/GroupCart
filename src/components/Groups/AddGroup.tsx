@@ -5,12 +5,12 @@ import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import { useAddGroup, useAddMemberToGroup } from "../../hooks/useGroup";
 import { FaCheck } from "react-icons/fa";
-import useAuthStore from "../../stores/authStore";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { groupSchema } from "../../lib/zodSchema";
+import { useCurrentUser } from "../../hooks/useAuth";
 
 export default function AddGroup({ setIsOpen }: { setIsOpen: () => void }) {
-    const { user } = useAuthStore();
+    const { data: user } = useCurrentUser();
     const form = useForm<Group>({
         resolver: zodResolver(groupSchema),
         defaultValues: {

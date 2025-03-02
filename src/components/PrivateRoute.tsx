@@ -1,15 +1,11 @@
-import useAuthStore from '../stores/authStore';
+import { useCurrentUser } from '../hooks/useAuth';
 import { ReactNode } from 'react';
 import { Navigate } from 'react-router-dom';
 
 export default function PrivateRoute({ children }: { children: ReactNode }) {
-    const { user, isLoading } = useAuthStore();
+    const { data: user, isLoading } = useCurrentUser();
 
     if (isLoading) return <div>Loading...</div>;
 
-    if (!user) {
-        <Navigate to="/login" />
-    }
-
-    return children;
+    return user ? children : <Navigate to="/login" />;
 }

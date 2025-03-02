@@ -1,10 +1,10 @@
 import { getGroup, getUserGroups } from "../services/groupService";
 import { addDataToFirestore, isUserRegistered } from "../utils";
-import useAuthStore from "../stores/authStore";
 import { useMutation, UseMutationResult, useQuery, useQueryClient, UseQueryResult } from "@tanstack/react-query";
 import { useState } from "react";
 import { UseFormReturn } from "react-hook-form";
 import { v4 as uuidv4 } from 'uuid';
+import { useCurrentUser } from "./useAuth";
 
 export const useAddMemberToGroup = (form: UseFormReturn<Group>): { addMember: () => Promise<void>, member: string, setMember: React.Dispatch<React.SetStateAction<string>> } => {
     const [member, setMember] = useState<string>("");
@@ -44,7 +44,7 @@ export const useAddGroup = (form: UseFormReturn<Group>): UseMutationResult<void,
 }
 
 export const useGetGroups = (): UseQueryResult<Group[] | null, Error> => {
-    const { user } = useAuthStore();
+    const { data: user } = useCurrentUser();
 
     const query = useQuery<Group[] | null, Error>({
         queryKey: ['groups', user?.email],

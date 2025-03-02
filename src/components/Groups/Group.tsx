@@ -1,10 +1,10 @@
-import useAuthStore from '../../stores/authStore'
+import { useCurrentUser } from '../../hooks/useAuth';
 import { FaListCheck } from 'react-icons/fa6'
 import { IoInformationCircleOutline } from 'react-icons/io5'
 import { Link } from 'react-router-dom'
 
 export default function Group({ data }: { data: Group }) {
-    const { user } = useAuthStore();
+    const { data: user } = useCurrentUser();
 
     return (
         <Link to={`/shopping-list/${data.id}`} className="flex h-48 cursor-pointer hover:opacity-80 w-full relative bg-white shadow-md">
