@@ -1,8 +1,17 @@
 import { GoChevronDown } from "react-icons/go";
 import { MdDragIndicator } from "react-icons/md";
 import { useSortable } from '@dnd-kit/sortable';
+import { DropdownMenuItem, DropdownMenuTrigger } from "@radix-ui/react-dropdown-menu"
+import {
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuLabel,
+    DropdownMenuSeparator,
+} from "../../components/ui/dropdown-menu"
+import { useUpdateShoppingItemStatus } from "../../hooks/useShoppingList";
 
 export default function ShoppingItem({ data }: { data: ShoppingItem }) {
+    const { mutate: handleShopItemStatus } = useUpdateShoppingItemStatus();
     const {
         attributes,
         listeners,
@@ -30,7 +39,18 @@ export default function ShoppingItem({ data }: { data: ShoppingItem }) {
                 <div className="flex gap-10 items-center w-full">
                     <div className="flex items-center gap-2">
                         <div className={`w-5 h-5 rounded-full shadow-sm ${data.status === 'success' ? 'bg-success' : 'bg-pending'}`}></div>
-                        <GoChevronDown className="text-gray-400 text-xl cursor-pointer" />
+                        <DropdownMenu>
+                            <DropdownMenuTrigger className="focus:outline-none focus-visible:ring-0 focus-visible:outline-none active:outline-none">
+                                <GoChevronDown className="text-gray-400 text-xl cursor-pointer" />
+                            </DropdownMenuTrigger>
+
+                            <DropdownMenuContent className="w-72 translate-x-[38px] translate-y-[10px] transform">
+                                <DropdownMenuLabel className="px-6 py-4 text-xs">Status</DropdownMenuLabel>
+                                <DropdownMenuSeparator />
+                                <DropdownMenuItem onClick={() => handleShopItemStatus({ status: 'success', itemId: data.id })} className={`cursor-pointer px-6 py-4 hover:outline-none text-xs flex items-center gap-4 ${data.status === 'success' && 'bg-light-success'}`}><div className="w-4 h-4 bg-success rounded-full"></div> Nabavljeno</DropdownMenuItem>
+                                <DropdownMenuItem onClick={() => handleShopItemStatus({ status: 'pending', itemId: data.id })} className={`cursor-pointer px-6 py-4 hover:outline-none text-xs flex items-center gap-4 ${data.status === 'pending' && 'bg-light-pending'}`}><div className="w-4 h-4 bg-pending rounded-full"></div> Nije nabavljeno</DropdownMenuItem>
+                            </DropdownMenuContent>
+                        </DropdownMenu>
                     </div>
 
                     <div className="flex flex-col">
@@ -40,7 +60,7 @@ export default function ShoppingItem({ data }: { data: ShoppingItem }) {
                 </div>
 
                 <div className="flex justify-center w-1/4">
-                    <p className="text-sm">{data.price} BAM</p>
+                    <p className="text-sm font-semibold">{data.price} BAM</p>
                 </div>
 
             </div>

@@ -1,4 +1,4 @@
-import { doc, runTransaction, Timestamp } from "firebase/firestore";
+import { doc, getDoc, runTransaction, Timestamp, updateDoc } from "firebase/firestore";
 import { db } from "../lib/firebase.config";
 import { v4 as uuidv4 } from "uuid";
 import * as Tesseract from "tesseract.js";
@@ -34,6 +34,31 @@ export const addItemToGroup = async (groupId: string, item: ShoppingItem): Promi
         console.log("Item uspješno dodat");
     } catch (error) {
         console.error("Error when adding shopping item:", error);
+    }
+};
+
+export const handleShopItemStatus = async (status: 'success' | 'pending', groupId: string, id: string): Promise<void> => {
+    try {
+        const docRef = doc(db, 'groups', groupId);
+        const docSnap = await getDoc(docRef);
+
+        if (!docSnap.exists()) {
+            console.log('Document dosnt exist')
+            return;
+        }
+
+        const docData = docSnap.data();
+
+        const groupList = docData.groupList || [];
+
+        const updatedGroupList = groupList.map((group: Group) =>
+            group.id === id ? { ...group, status } : group
+        );
+
+        await updateDoc(docRef, { groupList: updatedGroupList });
+
+    } catch (error) {
+        console.log("Failed to update group status in Firestore:", error);
     }
 };
 

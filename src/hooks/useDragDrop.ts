@@ -21,7 +21,7 @@ export default function useDragDrop(groupId: string) {
             if (oldIndex === -1 || newIndex === -1) return oldData;
 
             const updatedList = arrayMove(oldData.groupList, oldIndex, newIndex)
-                .map((item, index) => ({ ...item, order: index + 1 }));
+                .map((item, index) => ({ ...item, order: index + 1 }))
 
             updateGroupListOrder(groupId, updatedList)
 

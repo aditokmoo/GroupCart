@@ -29,9 +29,7 @@ export const getGroup = async (groupId: string): Promise<Group | null> => {
         const groupRef = doc(db, "groups", groupId);
         const groupSnap = await getDoc(groupRef);
 
-        if (!groupSnap.exists()) {
-            return null;
-        }
+        if (!groupSnap.exists()) return null;
 
         const data = groupSnap.data() as Omit<Group, 'id'>
         return { id: groupSnap.id, ...data };

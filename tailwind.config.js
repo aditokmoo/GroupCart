@@ -12,7 +12,9 @@ export default {
 				primary: '#FF6347',
 				'light-primary': '#fff2ee',
 				success: '#1AFF8C',
+				'light-success': '#c8f7e0',
 				pending: '#FF1A1A',
+				'light-pending': '#f2c7c7',
 				"light-green": '#2DBAA2'
 			},
 			colors: {
