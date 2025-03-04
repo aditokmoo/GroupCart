@@ -27,7 +27,7 @@ export default function Login() {
             <OAuthButtons />
 
             <Form {...form}>
-                <form onSubmit={form.handleSubmit((data) => loginWithEmailAndPassword(data))} className="flex flex-col gap-4 mt-28">
+                <form onSubmit={form.handleSubmit((data) => loginWithEmailAndPassword(data))} className="flex flex-col gap-4 py-12">
                     {LoginInputFields.map(({ name, type, placeholder }) => (
                         <FormField
                             key={name}

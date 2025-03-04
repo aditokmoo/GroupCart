@@ -28,7 +28,7 @@ export default function Register() {
             <OAuthButtons />
 
             <Form {...form}>
-                <form onSubmit={form.handleSubmit((data) => createAccount(data))} className="flex flex-col gap-4 mt-28">
+                <form onSubmit={form.handleSubmit((data) => createAccount(data))} className="flex flex-col gap-4 py-12">
                     {RegisterInputFields.map(({ name, type, placeholder }) => (
                         <FormField
                             key={name}
