@@ -8,6 +8,7 @@ import { FaCheck } from "react-icons/fa";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { groupSchema } from "../../lib/zodSchema";
 import { useCurrentUser } from "../../hooks/useAuth";
+import Loading from "../ui/Loading";
 
 export default function AddGroup({ setIsOpen }: { setIsOpen: () => void }) {
     const { data: user } = useCurrentUser();
@@ -23,7 +24,7 @@ export default function AddGroup({ setIsOpen }: { setIsOpen: () => void }) {
     const { member, setMember, addMember } = useAddMemberToGroup(form);
     const { mutate: createGroup, isPending: isCreatingGroup } = useAddGroup(form);
 
-    if (isCreatingGroup) return <h2>Loading...</h2>
+    if (isCreatingGroup) return <Loading />
 
     return (
         <DialogContent className="rounded-lg">

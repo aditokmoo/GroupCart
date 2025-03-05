@@ -4,12 +4,13 @@ import AddGroup from "../components/Groups/AddGroup";
 import { Dialog, DialogTrigger } from "../components/ui/dialog";
 import Group from "../components/Groups/Group";
 import { FaPlus } from "react-icons/fa";
+import Loading from "../components/ui/Loading";
 
 export default function GroupList() {
     const { data: groups, isLoading: isLoadingGroups } = useGetGroups();
     const [isOpen, setIsOpen] = useState<boolean>(false)
 
-    if (isLoadingGroups) return <h2>Loading...</h2>
+    if (isLoadingGroups) return <Loading />
 
     return (
         <div className="bg-light-primary h-screen pt-28">

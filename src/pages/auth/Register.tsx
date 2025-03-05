@@ -9,6 +9,7 @@ import { RegisterInputFields } from "../../lib/constants";
 import { Input } from "../../components/ui/input";
 import { registerSchema } from "../../lib/zodSchema";
 import OAuthButtons from "./OAuthButtons";
+import Loading from "../../components/ui/Loading";
 
 export default function Register() {
     const form = useForm<z.infer<typeof registerSchema>>({
@@ -21,7 +22,7 @@ export default function Register() {
     })
     const { mutate: createAccount, isPending: isCreatingAccount } = useRegister();
 
-    if (isCreatingAccount) return <h2>Loading...</h2>
+    if (isCreatingAccount) return <Loading />
 
     return (
         <div className="pt-10 pb-32 max-w-[500px] mx-auto">

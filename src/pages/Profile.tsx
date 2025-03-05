@@ -1,13 +1,14 @@
 import { useCurrentUser, useGetUser, useLogout } from '../hooks/useAuth';
 import { FaUserCircle } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
+import Loading from '../components/ui/Loading';
 
 export default function Profile() {
     const { data: user } = useCurrentUser();
     const { data: userData, isLoading: isLoadingUser } = useGetUser();
     const { mutate: signOut, isPending: isSigningOut } = useLogout();
 
-    if (isLoadingUser || isSigningOut) return <h2>Loading...</h2>
+    if (isLoadingUser || isSigningOut) return <Loading />
 
     return (
         <div className="pt-52 bg-light-primary h-screen flex flex-col gap-4 items-center">

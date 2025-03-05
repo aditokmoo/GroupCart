@@ -9,6 +9,7 @@ import { Button } from "../../components/ui/button";
 import { Input } from "../../components/ui/input";
 import { LoginInputFields } from "../../lib/constants";
 import OAuthButtons from "./OAuthButtons";
+import Loading from "../../components/ui/Loading";
 
 export default function Login() {
     const form = useForm<z.infer<typeof loginSchema>>({
@@ -20,7 +21,7 @@ export default function Login() {
     });
     const { mutate: loginWithEmailAndPassword, isPending: isLogginPending } = useLoginWithPassword();
 
-    if (isLogginPending) return <h2>Loading...</h2>
+    if (isLogginPending) return <Loading />
 
     return (
         <div className="pt-10 pb-32 max-w-[500px] mx-auto">
