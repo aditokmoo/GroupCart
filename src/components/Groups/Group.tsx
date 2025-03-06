@@ -7,10 +7,12 @@ import { Link } from 'react-router-dom'
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from '../ui/dropdown-menu';
 import { RiUserAddFill } from "react-icons/ri";
 import { FaRegTrashAlt } from 'react-icons/fa';
-import { MdTimeToLeave } from 'react-icons/md';
+import { TbArrowLeftToArc } from 'react-icons/tb';
+import { useDeleteGroup } from '../../hooks/useGroup';
 
 export default function Group({ data }: { data: Group }) {
     const { data: user } = useCurrentUser();
+    const { mutate: deleteGroup } = useDeleteGroup();
 
     return (
         <div className="relative">
@@ -39,10 +41,16 @@ export default function Group({ data }: { data: Group }) {
                     <DropdownMenuContent className="w-72 translate-x-[-1.6rem] shadow-lg transform z-40 bg-white">
                         <DropdownMenuLabel className="px-6 py-4 text-xs">Settings</DropdownMenuLabel>
                         <DropdownMenuSeparator />
-                        <DropdownMenuItem className='text-xs p-4 cursor-pointer focus:bg-gray-100 flex items-center gap-2'><RiUserAddFill /> Add members</DropdownMenuItem>
-                        <DropdownMenuItem className='text-xs p-4 cursor-pointer focus:bg-gray-100 flex items-center gap-2'><FiEdit /> Edit Group</DropdownMenuItem>
-                        <DropdownMenuItem className='text-xs p-4 cursor-pointer focus:bg-gray-100 flex items-center gap-2'><MdTimeToLeave /> Leave Group</DropdownMenuItem>
-                        <DropdownMenuItem className='text-xs p-4 cursor-pointer text-pending focus:bg-pending focus:text-white font-semibold flex items-center gap-2'><FaRegTrashAlt /> Delete Group</DropdownMenuItem>
+                        {data.createdBy === user?.email ? (
+                            <>
+                                <DropdownMenuItem className='text-xs p-4 cursor-pointer focus:bg-gray-100 flex items-center gap-2'><RiUserAddFill /> Add members</DropdownMenuItem>
+                                <DropdownMenuItem className='text-xs p-4 cursor-pointer focus:bg-gray-100 flex items-center gap-2'><FiEdit /> Edit Group</DropdownMenuItem>
+                                <DropdownMenuItem className='text-xs p-4 cursor-pointer focus:bg-gray-100 flex items-center gap-2'><TbArrowLeftToArc /> Leave Group</DropdownMenuItem>
+                                <DropdownMenuItem onClick={() => deleteGroup(data.id)} className='text-xs p-4 cursor-pointer text-pending focus:bg-pending focus:text-white font-semibold flex items-center gap-2'><FaRegTrashAlt /> Delete Group</DropdownMenuItem>
+                            </>
+                        ) : (
+                            <DropdownMenuItem className='text-xs p-4 cursor-pointer focus:bg-gray-100 flex items-center gap-2'><TbArrowLeftToArc /> Leave Group</DropdownMenuItem>
+                        )}
                     </DropdownMenuContent>
                 </DropdownMenu>
             </div>

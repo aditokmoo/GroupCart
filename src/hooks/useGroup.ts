@@ -1,4 +1,4 @@
-import { getGroup, getUserGroups } from "../services/groupService";
+import { deleteGroup, getGroup, getUserGroups } from "../services/groupService";
 import { addDataToFirestore, isUserRegistered } from "../utils";
 import { useMutation, UseMutationResult, useQuery, useQueryClient, UseQueryResult } from "@tanstack/react-query";
 import { useState } from "react";
@@ -69,4 +69,17 @@ export const useGetGroup = (groupId: string): UseQueryResult<Group | null, Error
     });
 
     return query;
+}
+
+export const useDeleteGroup = () => {
+    const queryClient = useQueryClient();
+    const { mutate, isPending } = useMutation({
+        mutationKey: ['delete_group'],
+        mutationFn: (groupId: string) => deleteGroup(groupId),
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ['groups'] });
+        }
+    });
+
+    return { mutate, isPending }
 }

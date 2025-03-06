@@ -1,4 +1,4 @@
-import { collection, doc, getDoc, getDocs, query, where } from "firebase/firestore";
+import { collection, deleteDoc, doc, getDoc, getDocs, query, where } from "firebase/firestore";
 import { db } from "../lib/firebase.config";
 
 export const getUserGroups = async (groupQuery: string, groupValue: string): Promise<Group[] | null> => {
@@ -36,5 +36,14 @@ export const getGroup = async (groupId: string): Promise<Group | null> => {
     } catch (error) {
         console.error("Error getting group:", error);
         throw error;
+    }
+};
+
+export const deleteGroup = async (groupId: string): Promise<void> => {
+    try {
+        const groupRef = doc(db, "groups", groupId);
+        await deleteDoc(groupRef);
+    } catch (error) {
+        console.log("Error deleting group:", error);
     }
 };
