@@ -4,11 +4,13 @@ import { useParams } from "react-router";
 import { useLocation } from "react-router";
 import { Link } from "react-router-dom";
 import { useCurrentUser } from "../../hooks/useAuth";
+import { useGetGroup } from "../../hooks/useGroup";
 
 export default function Navbar() {
     const { data: user } = useCurrentUser();
     const { pathname } = useLocation();
     const { groupId } = useParams();
+    const { data: groupData } = useGetGroup(groupId ?? '');
     const isGroupOpen = pathname === `/shopping-list/${groupId}`
 
     return (
@@ -20,7 +22,7 @@ export default function Navbar() {
                         <span className="text-sm relative top-[0.1rem]">3</span>
                     </div>
                 )}
-                <h2 className="text-center w-full">Welcome <span className="text-primary">{isGroupOpen ? 'to Group' : user?.displayName}</span></h2>
+                <h2 className="text-center w-full">Welcome to <span className="text-primary">{isGroupOpen ? groupData?.groupName : user?.displayName}</span></h2>
                 <Link to='/profile' className="text-3xl flex justify-end">{user?.photoURL ? <img className="w-12 h-12 object-cover rounded-full shadow-md border border-gray-50" src={user?.photoURL} alt="" /> : <FaUserCircle />}</Link>
             </div>
         </nav>
