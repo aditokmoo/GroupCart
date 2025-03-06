@@ -8,11 +8,12 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel,
 import { RiUserAddFill } from "react-icons/ri";
 import { FaRegTrashAlt } from 'react-icons/fa';
 import { TbArrowLeftToArc } from 'react-icons/tb';
-import { useDeleteGroup } from '../../hooks/useGroup';
+import { useDeleteGroup, useLeaveGroup } from '../../hooks/useGroup';
 
 export default function Group({ data }: { data: Group }) {
     const { data: user } = useCurrentUser();
     const { mutate: deleteGroup } = useDeleteGroup();
+    const { mutate: leaveGroup } = useLeaveGroup();
 
     return (
         <div className="relative">
@@ -45,11 +46,11 @@ export default function Group({ data }: { data: Group }) {
                             <>
                                 <DropdownMenuItem className='text-xs p-4 cursor-pointer focus:bg-gray-100 flex items-center gap-2'><RiUserAddFill /> Add members</DropdownMenuItem>
                                 <DropdownMenuItem className='text-xs p-4 cursor-pointer focus:bg-gray-100 flex items-center gap-2'><FiEdit /> Edit Group</DropdownMenuItem>
-                                <DropdownMenuItem className='text-xs p-4 cursor-pointer focus:bg-gray-100 flex items-center gap-2'><TbArrowLeftToArc /> Leave Group</DropdownMenuItem>
+                                <DropdownMenuItem onClick={() => leaveGroup({ groupId: data.id, user: user?.email })} className='text-xs p-4 cursor-pointer focus:bg-gray-100 flex items-center gap-2'><TbArrowLeftToArc /> Leave Group</DropdownMenuItem>
                                 <DropdownMenuItem onClick={() => deleteGroup(data.id)} className='text-xs p-4 cursor-pointer text-pending focus:bg-pending focus:text-white font-semibold flex items-center gap-2'><FaRegTrashAlt /> Delete Group</DropdownMenuItem>
                             </>
                         ) : (
-                            <DropdownMenuItem className='text-xs p-4 cursor-pointer focus:bg-gray-100 flex items-center gap-2'><TbArrowLeftToArc /> Leave Group</DropdownMenuItem>
+                            <DropdownMenuItem onClick={() => user?.email && leaveGroup({ groupId: data.id, user: user.email })} className='text-xs p-4 cursor-pointer focus:bg-gray-100 flex items-center gap-2'><TbArrowLeftToArc /> Leave Group</DropdownMenuItem>
                         )}
                     </DropdownMenuContent>
                 </DropdownMenu>

@@ -1,4 +1,4 @@
-import { collection, deleteDoc, doc, getDoc, getDocs, query, where } from "firebase/firestore";
+import { collection, deleteDoc, doc, getDoc, getDocs, query, runTransaction, where } from "firebase/firestore";
 import { db } from "../lib/firebase.config";
 
 export const getUserGroups = async (groupQuery: string, groupValue: string): Promise<Group[] | null> => {
@@ -36,6 +36,28 @@ export const getGroup = async (groupId: string): Promise<Group | null> => {
     } catch (error) {
         console.error("Error getting group:", error);
         throw error;
+    }
+};
+
+export const leaveGroup = async (groupId: string, user: string): Promise<void> => {
+    try {
+        const groupRef = doc(db, "groups", groupId);
+
+        await runTransaction(db, async (transaction) => {
+            const docSnap = await transaction.get(groupRef);
+            if (!docSnap.exists()) throw new Error("Group does not exist");
+
+            const data = docSnap.data();
+            const updatedMembers = data.members?.filter((member: string) => member !== user) || [];
+
+            transaction.update(groupRef, { members: updatedMembers });
+
+            if (updatedMembers.length === 0) {
+                transaction.delete(groupRef);
+            }
+        });
+    } catch (error) {
+        console.error("Error leaving group:", error);
     }
 };
 

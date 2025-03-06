@@ -1,4 +1,4 @@
-import { deleteGroup, getGroup, getUserGroups } from "../services/groupService";
+import { deleteGroup, getGroup, getUserGroups, leaveGroup } from "../services/groupService";
 import { addDataToFirestore, isUserRegistered } from "../utils";
 import { useMutation, UseMutationResult, useQuery, useQueryClient, UseQueryResult } from "@tanstack/react-query";
 import { useState } from "react";
@@ -37,10 +37,51 @@ export const useAddGroup = (form: UseFormReturn<Group>): UseMutationResult<void,
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ['groups'] });
             form.reset();
+        },
+        onError: (error) => {
+            console.log('Error creating group: ', error);
         }
     });
 
     return mutatiton;
+}
+
+export const useLeaveGroup = (): UseMutationResult<void, Error, { groupId: string, user: string }> => {
+    const queryClient = useQueryClient();
+    const mutation = useMutation<void, Error, { groupId: string, user: string }>({
+        mutationKey: ['leave_group'],
+        mutationFn: ({ groupId, user }: { groupId: string, user: string }) => {
+            if (!groupId && !user) throw new Error('Invalid groupId or user');
+            return leaveGroup(groupId, user);
+        },
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ['groups'] });
+        },
+        onError: (error) => {
+            console.log('Error leaving group: ', error);
+        }
+    });
+
+    return mutation
+}
+
+export const useDeleteGroup = (): UseMutationResult<void, Error, string> => {
+    const queryClient = useQueryClient();
+    const mutation = useMutation<void, Error, string>({
+        mutationKey: ['delete_group'],
+        mutationFn: (groupId: string) => {
+            if (!groupId) throw new Error('Invalid groupId');
+            return deleteGroup(groupId)
+        },
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ['groups'] });
+        },
+        onError: (error) => {
+            console.log('Error deleting group: ', error);
+        }
+    });
+
+    return mutation
 }
 
 export const useGetGroups = (): UseQueryResult<Group[] | null, Error> => {
@@ -49,7 +90,7 @@ export const useGetGroups = (): UseQueryResult<Group[] | null, Error> => {
     const query = useQuery<Group[] | null, Error>({
         queryKey: ['groups', user?.email],
         queryFn: () => {
-            if (!user?.email) return Promise.resolve(null);
+            if (!user?.email) throw new Error('Invalid user');
             return getUserGroups('members', user.email)
         },
         enabled: !!user?.email
@@ -62,24 +103,11 @@ export const useGetGroup = (groupId: string): UseQueryResult<Group | null, Error
     const query = useQuery<Group | null, Error>({
         queryKey: ['group', groupId],
         queryFn: () => {
-            if (!groupId) return Promise.resolve(null);
+            if (!groupId) throw new Error('Invalid groupId');
             return getGroup(groupId)
         },
         enabled: !!groupId
     });
 
     return query;
-}
-
-export const useDeleteGroup = () => {
-    const queryClient = useQueryClient();
-    const { mutate, isPending } = useMutation({
-        mutationKey: ['delete_group'],
-        mutationFn: (groupId: string) => deleteGroup(groupId),
-        onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: ['groups'] });
-        }
-    });
-
-    return { mutate, isPending }
 }
