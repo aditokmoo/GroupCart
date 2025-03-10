@@ -19,7 +19,7 @@ export default function Navbar() {
                 {isGroupOpen && (
                     <div className="flex items-center gap-3">
                         <FaUserGroup className="text-xl" />
-                        <span className="text-sm relative top-[0.1rem]">3</span>
+                        <span className="text-sm relative top-[0.1rem]">{groupData?.members.length}</span>
                     </div>
                 )}
                 <h2 className="text-center w-full">Welcome to <span className="text-primary">{isGroupOpen ? groupData?.groupName : user?.displayName}</span></h2>
