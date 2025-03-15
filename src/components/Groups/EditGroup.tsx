@@ -6,9 +6,9 @@ import GroupForm from "./GroupForm";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { groupSchema } from "../../lib/zodSchema";
 
-export default function AddGroup({ setIsOpen }: { setIsOpen: () => void }) {
+export default function EditGroup({ setIsOpen, selectedGroup }: { setIsOpen: () => void, selectedGroup: Group }) {
     const { data: user } = useCurrentUser();
-
+    console.log(selectedGroup)
     const form = useForm<Group>({
         resolver: zodResolver(groupSchema),
         defaultValues: {
@@ -25,8 +25,8 @@ export default function AddGroup({ setIsOpen }: { setIsOpen: () => void }) {
 
     return (
         <GroupForm
-            title="Create Group"
-            description="Enter group name and add members"
+            title="Edit Group"
+            description="Edit group name and add or remove members"
             form={form}
             onSubmit={createGroup}
             isSubmitting={isCreatingGroup}

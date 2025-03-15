@@ -17,7 +17,7 @@ interface User {
 type FirestoreData = Record<string, unknown>;
 
 interface Group {
-    id: string,
+    id?: string,
     groupName: string,
     createdBy: string,
     members: string[],

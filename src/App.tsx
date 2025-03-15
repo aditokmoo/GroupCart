@@ -4,6 +4,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import AppRoutes from "./routes/AppRoutes";
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import Loading from "./components/ui/Loading";
+import { Toaster } from "react-hot-toast";
 
 function App() {
   return (
@@ -11,6 +12,7 @@ function App() {
       <Suspense fallback={<Loading />}>
         <QueryClientProvider client={new QueryClient()}>
           <AppRoutes />
+          <Toaster />
           <ReactQueryDevtools initialIsOpen={false} />
         </QueryClientProvider>
       </Suspense>

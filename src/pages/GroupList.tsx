@@ -1,14 +1,14 @@
-import { useState } from "react";
 import { useGetGroups } from "../hooks/useGroup";
 import AddGroup from "../components/Groups/AddGroup";
 import { Dialog, DialogTrigger } from "../components/ui/dialog";
 import Group from "../components/Groups/Group";
 import { FaPlus } from "react-icons/fa";
 import Loading from "../components/ui/Loading";
+import useToggle from "../hooks/useToggle";
 
 export default function GroupList() {
     const { data: groups, isLoading: isLoadingGroups } = useGetGroups();
-    const [isOpen, setIsOpen] = useState<boolean>(false)
+    const { isActive, toggle } = useToggle();
 
     if (isLoadingGroups) return <Loading />
 
@@ -20,9 +20,9 @@ export default function GroupList() {
                 ))}
             </div>
 
-            <Dialog open={isOpen} onOpenChange={setIsOpen}>
+            <Dialog open={isActive['add_group_modal']} onOpenChange={() => toggle('add_group_modal')}>
                 <DialogTrigger className="fixed bottom-10 right-8 p-4 border-2 border-primary rounded-full"><FaPlus className="text-2xl text-primary" /></DialogTrigger>
-                <AddGroup setIsOpen={() => setIsOpen(false)} />
+                <AddGroup setIsOpen={() => toggle('add_group_modal')} />
             </Dialog>
         </div>
     )

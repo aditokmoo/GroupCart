@@ -1,19 +1,25 @@
 import { useCallback, useEffect, useReducer, useRef } from "react";
 import { shoppingReducer, cameraOptions } from "../reducers/shoppingReducer";
 import Webcam from "react-webcam";
+import toast from "react-hot-toast";
 
 export default function useShoppingCamera() {
     const webcamRef = useRef<Webcam>(null);
     const [state, dispatch] = useReducer(shoppingReducer, cameraOptions);
 
+    console.log(state)
+
     const checkCamera = useCallback(async () => {
         try {
             const devices = await navigator.mediaDevices.enumerateDevices();
             const videoDevices = devices.filter((device) => device.kind === "videoinput");
+            console.log(videoDevices)
             dispatch({ type: 'SET_HAS_CAMERA', payload: videoDevices.length > 0 })
             if (videoDevices.length <= 0) {
                 dispatch({ type: 'SET_CAMERA_STREAM', payload: null })
             }
+
+            console.log(videoDevices)
         } catch (error) {
             console.log(error)
             dispatch({ type: 'SET_HAS_CAMERA', payload: false })
@@ -31,11 +37,12 @@ export default function useShoppingCamera() {
                 dispatch({ type: "SET_CAMERA_STREAM", payload: null });
             }
         };
-    }, [checkCamera, state.cameraStream])
+    }, [checkCamera])
 
     const handleCameraToggle = async () => {
         if (!state.hasCamera) {
             await checkCamera();
+            toast('No Camera found')
         }
 
         if (state.hasCamera) {
