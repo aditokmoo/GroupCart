@@ -9,8 +9,11 @@ const Register = lazy(() => import("../pages/auth/Register"));
 const Profile = lazy(() => import("../pages/Profile"));
 const GroupList = lazy(() => import("../pages/GroupList"));
 const Group = lazy(() => import("../pages/Group"));
+const AISuggestion = lazy(() => import("../pages/AISuggestion"));
 const AuthLayout = lazy(() => import("../layout/AuthLayout"));
 const AppLayout = lazy(() => import("../layout/AppLayout"));
+const GroupLayout = lazy(() => import("../layout/GroupLayout"));
+const AILayout = lazy(() => import("../layout/AILayout"));
 
 const routes = [
   { path: "/", element: <Home />, restricted: false },
@@ -54,11 +57,31 @@ const routes = [
           </PrivateRoute>
         ),
       },
+    ],
+  },
+  {
+    path: "/",
+    element: <GroupLayout />,
+    children: [
       {
         path: "shopping-list/:groupId",
         element: (
           <PrivateRoute>
             <Group />
+          </PrivateRoute>
+        ),
+      },
+    ],
+  },
+  {
+    path: "/",
+    element: <AILayout />,
+    children: [
+      {
+        path: "shopping-list/:groupId/ai-suggestion",
+        element: (
+          <PrivateRoute>
+            <AISuggestion />
           </PrivateRoute>
         ),
       },

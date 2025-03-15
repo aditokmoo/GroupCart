@@ -1,5 +1,4 @@
 import useToggle from "../../hooks/useToggle";
-import MobileNav from "../Navbar/MobileNav";
 import { Dialog, DialogTrigger } from "../ui/dialog";
 import { FaPlus } from "react-icons/fa";
 import useShoppingCamera from "../../hooks/useShoppingCamera";
@@ -38,8 +37,6 @@ export default function ShoppingList({ data }: { data?: Group | null }) {
                         </div>
                     </SortableContext>
                 </DndContext>
-
-                <MobileNav toggle={toggle} handleCameraToggle={handleCameraToggle} />
 
                 {state.hasCamera && state.cameraStream && (
                     <ShoppingCamera
