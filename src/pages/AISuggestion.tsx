@@ -2,7 +2,7 @@ import { TbAnalyze } from "react-icons/tb";
 
 export default function AISuggestion() {
     return (
-        <div className="w-full bg-white rounded-xl h-screen flex flex-col justify-center">
+        <div className="w-full max-w-[70rem] mx-auto bg-white rounded-xl h-screen flex flex-col justify-center">
             <div className="flex flex-col items-center gap-4 py-6 px-32">
                 <img src="/images/ai-chat-mascot.webp" alt="" />
                 <div className="flex flex-col gap-2 text-center">
@@ -12,7 +12,7 @@ export default function AISuggestion() {
             </div>
 
             <div className="flex justify-center items-center w-full p-10">
-                <button className="flex justify-center items-center gap-2 bg-light-green text-white p-6 w-full rounded-md text-sm font-bold hover:opacity-80 transition-all duration-300"><TbAnalyze className="text-xl" />ANALYZE</button>
+                <button className="flex justify-center items-center gap-2 max-w-96 bg-light-green text-white p-6 w-full rounded-md text-sm font-bold hover:opacity-80 transition-all duration-300"><TbAnalyze className="text-xl" />ANALYZE</button>
             </div>
         </div>
     )
