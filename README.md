@@ -27,3 +27,7 @@ The **Smart Shopping List App** is a collaborative and intelligent shopping assi
 2. Add items to your shared shopping list.
 3. Let the AI bot analyze your list and suggest what you might have missed.
 4. Collaborate in real-time with friends and family for a seamless shopping experience!
+
+## **AI Suggestion Repository**
+
+Link: https://github.com/aditokmoo/ai-suggestion
